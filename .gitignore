@@ -1,0 +1,22 @@
+node_modules
+.pnpm-store
+.turbo
+.DS_Store
+
+# Build output
+**/dist
+**/.output
+**/.cache
+**/.expo
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Generated
+**/routeTree.gen.ts
+**/worker-configuration.d.ts
+
+# Logs
+*.log

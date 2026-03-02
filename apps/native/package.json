@@ -1,0 +1,23 @@
+{
+  "name": "@omnistack/native",
+  "private": true,
+  "main": "expo-router/entry",
+  "scripts": {
+    "dev": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web",
+    "check-types": "tsc --noEmit",
+    "lint": "biome check ."
+  },
+  "dependencies": {
+    "expo": "55.0.4",
+    "expo-router": "55.0.3",
+    "react": "19.2.4",
+    "react-native": "0.84.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.2.4",
+    "typescript": "5.9.3"
+  }
+}

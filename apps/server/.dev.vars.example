@@ -1,0 +1,15 @@
+# Cloudflare workers local vars
+WEB_ORIGIN=http://localhost:3000
+BETTER_AUTH_URL=http://localhost:3001
+BETTER_AUTH_SECRET=change-me
+
+# Optional OAuth providers
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+
+# Required for drizzle-kit remote operations
+CLOUDFLARE_ACCOUNT_ID=
+CLOUDFLARE_API_TOKEN=
+CLOUDFLARE_D1_DATABASE_ID=

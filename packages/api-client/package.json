@@ -1,0 +1,22 @@
+{
+  "name": "@omnistack/api-client",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./contract": "./src/contract.ts"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "lint": "biome check ."
+  },
+  "dependencies": {
+    "@orpc/client": "1.13.5",
+    "@orpc/contract": "1.13.5",
+    "zod": "4.3.6"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.2.4",
+    "typescript": "5.9.3"
+  }
+}

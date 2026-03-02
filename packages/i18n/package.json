@@ -1,0 +1,22 @@
+{
+  "name": "@omnistack/i18n",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./messages/en": "./src/messages/en.ts",
+    "./messages/zh": "./src/messages/zh.ts",
+    "./messages/jp": "./src/messages/jp.ts"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "lint": "biome check ."
+  },
+  "dependencies": {
+    "use-intl": "4.8.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.2.4",
+    "typescript": "5.9.3"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "@omnistack/server",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev src/index.ts --port 3001",
+    "build": "wrangler deploy --dry-run",
+    "check-types": "tsc --noEmit",
+    "lint": "biome check .",
+    "db:generate": "drizzle-kit generate",
+    "db:push": "wrangler d1 migrations apply DB --local",
+    "db:studio": "drizzle-kit studio"
+  },
+  "dependencies": {
+    "@omnistack/api-client": "workspace:*",
+    "@omnistack/i18n": "workspace:*",
+    "@orpc/server": "1.13.5",
+    "better-auth": "1.5.0",
+    "drizzle-orm": "0.45.1",
+    "hono": "4.12.3",
+    "zod": "4.3.6"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.2.4",
+    "@cloudflare/workers-types": "4.20260305.0",
+    "@types/node": "24.5.2",
+    "drizzle-kit": "0.31.9",
+    "typescript": "5.9.3",
+    "wrangler": "4.69.0"
+  }
+}
