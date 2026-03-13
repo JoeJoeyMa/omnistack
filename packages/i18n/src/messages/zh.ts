@@ -1,6 +1,6 @@
 export const zhMessages = {
   common: {
-    hello: '���',
-    welcome: '��ӭʹ�� OmniStack',
+    hello: "���",
+    welcome: "��ӭʹ�� MAPLE-GLOBAL",
   },
-}
+};

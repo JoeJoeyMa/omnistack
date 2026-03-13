@@ -1,44 +1,72 @@
 /// <reference types="vite/client" />
-import * as React from 'react'
-import { HeadContent, Link, Outlet, Scripts, createRootRoute } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
-import appCss from '~/styles/app.css?url'
+
+import {
+  createRootRoute,
+  HeadContent,
+  Outlet,
+  Scripts,
+} from "@tanstack/react-router";
+import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { SiteFooter } from "~/components/site/footer";
+import { SiteHeader } from "~/components/site/header";
+import appCss from "~/styles/app.css?url";
 
 export const Route = createRootRoute({
   head: () => ({
     meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'OmniStack Template' },
+      { charSet: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      {
+        name: "description",
+        content:
+          "MAPLE-GLOBAL builds premium AI-first websites, pricing systems, and workspace flows for modern SaaS teams.",
+      },
+      { title: "MAPLE-GLOBAL" },
     ],
-    links: [{ rel: 'stylesheet', href: appCss }],
+    links: [
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossOrigin: "anonymous",
+      },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap",
+      },
+      { rel: "stylesheet", href: appCss },
+    ],
   }),
   component: RootComponent,
-})
+});
 
 function RootComponent() {
   return (
     <html lang="en">
       <head>
+        {/* Anti-FOUC: apply dark class before first paint */}
+        <script
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: intentional FOUC prevention
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}})()`,
+          }}
+        />
         <HeadContent />
       </head>
-      <body>
-        <header className="border-b bg-white/80 backdrop-blur">
-          <nav className="mx-auto flex max-w-5xl items-center gap-4 p-4">
-            <Link to="/" className="font-medium">
-              Home
-            </Link>
-            <Link to="/about" className="font-medium">
-              About
-            </Link>
-          </nav>
-        </header>
-        <main className="mx-auto max-w-5xl p-6">
+      <body className="site-shell bg-white dark:bg-[#0a0a0a] text-black dark:text-white min-h-screen flex flex-col antialiased">
+        <SiteHeader />
+
+        <main className="flex-1 w-full mx-auto relative z-10 pt-[72px]">
           <Outlet />
         </main>
-        <TanStackRouterDevtools position="bottom-right" />
+
+        <SiteFooter />
+
+        {import.meta.env.DEV ? (
+          <TanStackRouterDevtools position="bottom-right" />
+        ) : null}
         <Scripts />
       </body>
     </html>
-  )
+  );
 }

@@ -1,11 +1,11 @@
-import { enMessages } from './messages/en'
-import { zhMessages } from './messages/zh'
-import { jpMessages } from './messages/jp'
+import { enMessages } from "./messages/en";
+import { jpMessages } from "./messages/jp";
+import { zhMessages } from "./messages/zh";
 
 export const messages = {
   en: enMessages,
   zh: zhMessages,
   jp: jpMessages,
-}
+};
 
-export type AppLocale = keyof typeof messages
+export type AppLocale = keyof typeof messages;

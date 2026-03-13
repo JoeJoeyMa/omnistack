@@ -1,5 +1,5 @@
 {
-  "name": "@omnistack/storage-config",
+  "name": "@MAPLE-GLOBAL/storage-config",
   "private": true,
   "type": "module",
   "exports": {
@@ -10,7 +10,7 @@
     "lint": "biome check ."
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.4",
+    "@biomejs/biome": "2.4.6",
     "typescript": "5.9.3"
   }
 }

@@ -1,17 +1,114 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   color-scheme: light;
+  --page-bg: #ffffff;
+  --page-ink: #000000;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  height: 100%;
 }
 
 body {
   margin: 0;
-  font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
-  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-  color: #0f172a;
+  min-height: 100vh;
+  background-color: #ffffff;
+  color: #000000;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body,
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }
 
 a {
   color: inherit;
   text-decoration: none;
+}
+
+::selection {
+  background: rgba(0, 0, 0, 0.1);
+  color: black;
+}
+
+.site-shell {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: #ffffff;
+}
+
+/* Optional subtle blue/purple edge shadows from reference could be added via a fixed overlay */
+.site-edge-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 120px rgba(230, 235, 255, 0.5);
+  z-index: 0;
+}
+
+.site-header {
+  z-index: 50;
+  position: relative;
+}
+
+.site-mega-panel-wrap {
+  position: relative;
+}
+
+.site-mega-panel {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition:
+    max-height 0.4s ease,
+    opacity 0.3s ease,
+    transform 0.4s ease;
+  pointer-events: none;
+}
+
+.site-mega-panel[data-open="true"] {
+  max-height: 560px;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ─── Dark-mode theme ─── */
+.dark {
+  color-scheme: dark;
+  --page-bg: #0a0a0a;
+  --page-ink: #ffffff;
+}
+
+.dark body,
+.dark .site-shell {
+  background-color: #0a0a0a;
+  color: #ffffff;
+}
+
+.dark ::selection {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
 }

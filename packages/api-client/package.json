@@ -1,5 +1,5 @@
 {
-  "name": "@omnistack/api-client",
+  "name": "@MAPLE-GLOBAL/api-client",
   "private": true,
   "type": "module",
   "exports": {
@@ -11,12 +11,12 @@
     "lint": "biome check ."
   },
   "dependencies": {
-    "@orpc/client": "1.13.5",
-    "@orpc/contract": "1.13.5",
+    "@orpc/client": "1.13.6",
+    "@orpc/contract": "1.13.6",
     "zod": "4.3.6"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.4",
+    "@biomejs/biome": "2.4.6",
     "typescript": "5.9.3"
   }
 }

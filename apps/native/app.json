@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "OmniStack Native",
-    "slug": "omnistack-native",
-    "scheme": "omnistack",
+    "name": "MAPLE-GLOBAL Native",
+    "slug": "MAPLE-GLOBAL-native",
+    "scheme": "MAPLE-GLOBAL",
     "version": "0.1.0",
     "orientation": "portrait",
     "plugins": ["expo-router"],

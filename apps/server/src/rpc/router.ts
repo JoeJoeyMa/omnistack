@@ -1,16 +1,14 @@
-import { implement } from '@orpc/server'
-import { appContract } from '@omnistack/api-client/contract'
+import { appContract } from "@MAPLE-GLOBAL/api-client/contract";
+import { implement } from "@orpc/server";
 
-const rpc = implement(appContract)
+const rpc = implement(appContract);
 
 export const rpcRouter = rpc.router({
-  health: rpc.health
-    .handler(() => ({
-      status: 'ok',
-      timestamp: new Date().toISOString(),
-    })),
-  hello: rpc.hello
-    .handler(({ input }) => ({
-      message: `Hello, ${input.name}!`,
-    })),
-})
+  health: rpc.health.handler(() => ({
+    status: "ok",
+    timestamp: new Date().toISOString(),
+  })),
+  hello: rpc.hello.handler(({ input }) => ({
+    message: `Hello, ${input.name}!`,
+  })),
+});

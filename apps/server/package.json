@@ -1,31 +1,31 @@
 {
-  "name": "@omnistack/server",
+  "name": "@MAPLE-GLOBAL/server",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "wrangler dev src/index.ts --port 3001",
     "build": "wrangler deploy --dry-run",
     "check-types": "tsc --noEmit",
-    "lint": "biome check .",
+    "lint": "biome check src drizzle.config.ts package.json tsconfig.json wrangler.jsonc .dev.vars.example",
     "db:generate": "drizzle-kit generate",
     "db:push": "wrangler d1 migrations apply DB --local",
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
-    "@omnistack/api-client": "workspace:*",
-    "@omnistack/i18n": "workspace:*",
-    "@orpc/server": "1.13.5",
-    "better-auth": "1.5.0",
+    "@MAPLE-GLOBAL/api-client": "workspace:*",
+    "@MAPLE-GLOBAL/i18n": "workspace:*",
+    "@orpc/server": "1.13.6",
+    "better-auth": "1.5.5",
     "drizzle-orm": "0.45.1",
-    "hono": "4.12.3",
+    "hono": "4.12.7",
     "zod": "4.3.6"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.4",
-    "@cloudflare/workers-types": "4.20260305.0",
-    "@types/node": "24.5.2",
+    "@biomejs/biome": "2.4.6",
+    "@cloudflare/workers-types": "4.20260312.1",
+    "@types/node": "25.4.0",
     "drizzle-kit": "0.31.9",
     "typescript": "5.9.3",
-    "wrangler": "4.69.0"
+    "wrangler": "4.72.0"
   }
 }

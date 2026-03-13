@@ -1,6 +1,6 @@
-# OmniStack: The Ultimate Universal Edge-First Template
+# MAPLE-GLOBAL: The Ultimate Universal Edge-First Template
 
-This template follows the OmniStack docs architecture and tech stack:
+This template follows the MAPLE-GLOBAL docs architecture and tech stack:
 
 - Frontend: React 19 + TanStack Start + Tailwind CSS + shadcn/ui
 - Backend: Hono + Cloudflare Workers
@@ -13,7 +13,7 @@ This template follows the OmniStack docs architecture and tech stack:
 ## Project Structure
 
 ```txt
-omnistack/
+MAPLE-GLOBAL/
   apps/
     web/
     server/

@@ -1,5 +1,5 @@
 {
-  "name": "@omnistack/config-ui",
+  "name": "@MAPLE-GLOBAL/config-ui",
   "private": true,
   "type": "module",
   "scripts": {
@@ -7,14 +7,14 @@
     "build": "vite build",
     "preview": "vite preview --port 3002",
     "check-types": "tsc --noEmit",
-    "lint": "biome check ."
+    "lint": "biome check src package.json tsconfig.json vite.config.ts index.html"
   },
   "dependencies": {
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.4",
+    "@biomejs/biome": "2.4.6",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "5.1.4",

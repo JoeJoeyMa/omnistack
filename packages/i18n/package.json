@@ -1,5 +1,5 @@
 {
-  "name": "@omnistack/i18n",
+  "name": "@MAPLE-GLOBAL/i18n",
   "private": true,
   "type": "module",
   "exports": {
@@ -16,7 +16,7 @@
     "use-intl": "4.8.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.4",
+    "@biomejs/biome": "2.4.6",
     "typescript": "5.9.3"
   }
 }

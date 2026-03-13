@@ -1,5 +1,5 @@
 {
-  "name": "omnistack-template",
+  "name": "MAPLE-GLOBAL-template",
   "private": true,
   "version": "0.1.0",
   "packageManager": "pnpm@10.30.3",
@@ -8,19 +8,19 @@
   },
   "scripts": {
     "dev": "turbo dev --parallel",
-    "dev:web": "turbo dev --filter=@omnistack/web",
-    "dev:server": "turbo dev --filter=@omnistack/server",
-    "dev:config": "turbo dev --filter=@omnistack/config-ui",
-    "dev:native": "turbo dev --filter=@omnistack/native",
+    "dev:web": "turbo dev --filter=@MAPLE-GLOBAL/web",
+    "dev:server": "turbo dev --filter=@MAPLE-GLOBAL/server",
+    "dev:config": "turbo dev --filter=@MAPLE-GLOBAL/config-ui",
+    "dev:native": "turbo dev --filter=@MAPLE-GLOBAL/native",
     "build": "turbo build",
     "check-types": "turbo check-types",
     "lint": "turbo lint",
-    "db:generate": "pnpm --filter @omnistack/server db:generate",
-    "db:push": "pnpm --filter @omnistack/server db:push",
-    "db:studio": "pnpm --filter @omnistack/server db:studio"
+    "db:generate": "pnpm --filter @MAPLE-GLOBAL/server db:generate",
+    "db:push": "pnpm --filter @MAPLE-GLOBAL/server db:push",
+    "db:studio": "pnpm --filter @MAPLE-GLOBAL/server db:studio"
   },
   "devDependencies": {
-    "turbo": "2.8.12",
+    "turbo": "2.8.16",
     "typescript": "5.9.3"
   }
 }
