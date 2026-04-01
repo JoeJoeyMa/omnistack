@@ -1,5 +1,5 @@
 {
-  "name": "@MAPLE-GLOBAL/storage-config",
+  "name": "@maple-global/storage-config",
   "private": true,
   "type": "module",
   "exports": {

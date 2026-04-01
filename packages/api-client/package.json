@@ -1,10 +1,11 @@
 {
-  "name": "@MAPLE-GLOBAL/api-client",
+  "name": "@maple-global/api-client",
   "private": true,
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./contract": "./src/contract.ts"
+    "./contract": "./src/contract.ts",
+    "./shop": "./src/shop.ts"
   },
   "scripts": {
     "check-types": "tsc --noEmit",

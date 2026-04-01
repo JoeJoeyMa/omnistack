@@ -1,7 +1,9 @@
-import { createAuthClient } from "better-auth/client";
+import { createAuthClient } from "better-auth/react";
+import { emailOTPClient } from "better-auth/client/plugins";
 
-const baseURL = import.meta.env.VITE_SERVER_URL ?? "http://localhost:3001";
+const serverURL = import.meta.env.VITE_SERVER_URL ?? "http://localhost:3001";
 
 export const authClient = createAuthClient({
-  baseURL,
+  baseURL: `${serverURL}/api/auth`,
+  plugins: [emailOTPClient()],
 });

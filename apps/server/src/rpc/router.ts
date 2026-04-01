@@ -1,7 +1,12 @@
-import { appContract } from "@MAPLE-GLOBAL/api-client/contract";
+import { appContract } from "@maple-global/api-client/contract";
 import { implement } from "@orpc/server";
+import { getShopCatalog, upsertShopProduct } from "../shop/service";
 
-const rpc = implement(appContract);
+export type RpcContext = {
+  db: D1Database;
+};
+
+const rpc = implement(appContract).$context<RpcContext>();
 
 export const rpcRouter = rpc.router({
   health: rpc.health.handler(() => ({
@@ -11,4 +16,8 @@ export const rpcRouter = rpc.router({
   hello: rpc.hello.handler(({ input }) => ({
     message: `Hello, ${input.name}!`,
   })),
+  shopCatalog: rpc.shopCatalog.handler(({ context }) => getShopCatalog(context.db)),
+  shopUpsertProduct: rpc.shopUpsertProduct.handler(({ context, input }) =>
+    upsertShopProduct(context.db, input),
+  ),
 });

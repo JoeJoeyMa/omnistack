@@ -1,6 +1,4 @@
 export const enMessages = {
-  common: {
-    hello: "Hello",
-    welcome: "Welcome to MAPLE-GLOBAL",
-  },
+  localeLabel: "English",
+  copy: {} as Record<string, string>,
 };

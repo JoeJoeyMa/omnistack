@@ -1,13 +1,17 @@
-# Cloudflare workers local vars
-WEB_ORIGIN=http://localhost:3000
-BETTER_AUTH_URL=http://localhost:3001
+# Online dev workers vars (`apps/server/.dev.vars`)
+WEB_ORIGIN=https://maple-global-web.joejoey.workers.dev
+BETTER_AUTH_URL=https://maple-global-server.joejoey.workers.dev
 BETTER_AUTH_SECRET=change-me
 
 # Optional OAuth providers
+# GitHub callback URL: https://maple-global-server.joejoey.workers.dev/api/auth/callback/github
 GITHUB_CLIENT_ID=
 GITHUB_CLIENT_SECRET=
+# Google redirect URI: https://maple-global-server.joejoey.workers.dev/api/auth/callback/google
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
+RESEND_API_KEY=
+RESEND_FROM_EMAIL="MAPLE-GLOBAL <onboarding@resend.dev>"
 
 # Required for drizzle-kit remote operations
 CLOUDFLARE_ACCOUNT_ID=

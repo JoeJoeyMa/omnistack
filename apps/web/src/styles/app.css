@@ -89,9 +89,128 @@ a {
   pointer-events: auto;
 }
 
+@keyframes maple-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes maple-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
+@keyframes maple-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.94);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes maple-sweep {
+  from {
+    transform: translateX(-120%) skewX(-18deg);
+  }
+
+  to {
+    transform: translateX(320%) skewX(-18deg);
+  }
+}
+
+.maple-reveal {
+  opacity: 0;
+  transform: translateY(24px) scale(0.985);
+  animation: maple-fade-up 780ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.maple-delay-1 {
+  animation-delay: 80ms;
+}
+
+.maple-delay-2 {
+  animation-delay: 160ms;
+}
+
+.maple-delay-3 {
+  animation-delay: 240ms;
+}
+
+.maple-delay-4 {
+  animation-delay: 320ms;
+}
+
+.maple-delay-5 {
+  animation-delay: 400ms;
+}
+
+.maple-float {
+  animation: maple-float 7s ease-in-out infinite;
+}
+
+.maple-pulse {
+  animation: maple-pulse 2.4s ease-in-out infinite;
+}
+
+.maple-sheen {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.maple-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 -36%;
+  width: 32%;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.72),
+    transparent
+  );
+  animation: maple-sweep 3.8s ease-in-out infinite;
+}
+
+.dark .maple-sheen::after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .maple-reveal,
+  .maple-float,
+  .maple-pulse,
+  .maple-sheen::after {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }
 

@@ -1,7 +1,9 @@
 import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useCopyText } from "~/lib/locale";
 
 export function ThemeToggle() {
+  const copy = useCopyText();
   const [dark, setDark] = useState<boolean>(() => {
     if (typeof window === "undefined") return false;
     try {
@@ -26,12 +28,16 @@ export function ThemeToggle() {
 
   return (
     <button
-      aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+      aria-label={copy(dark ? "Switch to light mode" : "Switch to dark mode")}
       className="flex h-8 w-8 items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-white/10 transition-colors"
       onClick={() => setDark((d) => !d)}
       type="button"
     >
-      {dark ? <Sun className="h-[16px] w-[16px]" /> : <Moon className="h-[16px] w-[16px]" />}
+      {dark ? (
+        <Sun className="h-[16px] w-[16px]" />
+      ) : (
+        <Moon className="h-[16px] w-[16px]" />
+      )}
     </button>
   );
 }

@@ -1,0 +1,19 @@
+# Local worker vars (`apps/server/.dev.vars.local`)
+WEB_ORIGIN=http://localhost:3000
+BETTER_AUTH_URL=http://localhost:3001
+BETTER_AUTH_SECRET=change-me
+
+# Optional OAuth providers
+# GitHub callback URL: http://localhost:3001/api/auth/callback/github
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+# Google redirect URI: http://localhost:3001/api/auth/callback/google
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+RESEND_API_KEY=
+RESEND_FROM_EMAIL="MAPLE-GLOBAL <onboarding@resend.dev>"
+
+# Required for drizzle-kit remote operations
+CLOUDFLARE_ACCOUNT_ID=
+CLOUDFLARE_API_TOKEN=
+CLOUDFLARE_D1_DATABASE_ID=

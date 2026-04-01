@@ -1,5 +1,5 @@
 {
-  "name": "@MAPLE-GLOBAL/native",
+  "name": "@maple-global/native",
   "private": true,
   "main": "expo-router/entry",
   "scripts": {

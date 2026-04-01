@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "MAPLE-GLOBAL-server",
+  "name": "maple-global-server",
   "main": "src/index.ts",
   "compatibility_date": "2026-03-01",
   "compatibility_flags": ["nodejs_compat"],
@@ -8,11 +8,26 @@
     {
       "binding": "DB",
       "database_name": "MAPLE-GLOBAL-db",
-      "database_id": "replace-with-your-d1-database-id"
+      "database_id": "9eabac5f-743d-4cec-b294-8295dd336d67"
     }
   ],
   "vars": {
-    "WEB_ORIGIN": "http://localhost:3000",
-    "BETTER_AUTH_URL": "http://localhost:3001"
+    "WEB_ORIGIN": "https://maple-global-web.joejoey.workers.dev",
+    "BETTER_AUTH_URL": "https://maple-global-server.joejoey.workers.dev"
+  },
+  "env": {
+    "local": {
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "MAPLE-GLOBAL-db",
+          "database_id": "9eabac5f-743d-4cec-b294-8295dd336d67"
+        }
+      ],
+      "vars": {
+        "WEB_ORIGIN": "http://localhost:3000",
+        "BETTER_AUTH_URL": "http://localhost:3001"
+      }
+    }
   }
 }

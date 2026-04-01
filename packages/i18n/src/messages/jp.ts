@@ -1,6 +1,4 @@
 export const jpMessages = {
-  common: {
-    hello: "����ˤ���",
-    welcome: "MAPLE-GLOBAL �ؤ褦����",
-  },
+  localeLabel: "Japanese",
+  copy: {} as Record<string, string>,
 };

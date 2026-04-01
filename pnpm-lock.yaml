@@ -67,10 +67,10 @@ importers:
 
   apps/server:
     dependencies:
-      '@MAPLE-GLOBAL/api-client':
+      '@maple-global/api-client':
         specifier: workspace:*
         version: link:../../packages/api-client
-      '@MAPLE-GLOBAL/i18n':
+      '@maple-global/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
       '@orpc/server':
@@ -108,12 +108,76 @@ importers:
         specifier: 4.72.0
         version: 4.72.0(@cloudflare/workers-types@4.20260312.1)
 
-  apps/web:
+  apps/shop:
     dependencies:
-      '@MAPLE-GLOBAL/api-client':
+      '@maple-global/api-client':
         specifier: workspace:*
         version: link:../../packages/api-client
-      '@MAPLE-GLOBAL/i18n':
+      '@tanstack/react-router':
+        specifier: 1.166.7
+        version: 1.166.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@tanstack/react-router-devtools':
+        specifier: 1.166.7
+        version: 1.166.7(@tanstack/react-router@1.166.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(@tanstack/router-core@1.166.7)(csstype@3.2.3)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@tanstack/react-start':
+        specifier: 1.166.8
+        version: 1.166.8(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@25.4.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
+      clsx:
+        specifier: 2.1.1
+        version: 2.1.1
+      lucide-react:
+        specifier: 0.577.0
+        version: 0.577.0(react@19.2.4)
+      react:
+        specifier: 19.2.4
+        version: 19.2.4
+      react-dom:
+        specifier: 19.2.4
+        version: 19.2.4(react@19.2.4)
+      tailwind-merge:
+        specifier: 3.5.0
+        version: 3.5.0
+    devDependencies:
+      '@biomejs/biome':
+        specifier: 2.4.6
+        version: 2.4.6
+      '@cloudflare/vite-plugin':
+        specifier: 1.27.0
+        version: 1.27.0(vite@7.3.1(@types/node@25.4.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))(workerd@1.20260310.1)(wrangler@4.72.0(@cloudflare/workers-types@4.20260312.1))
+      '@tailwindcss/vite':
+        specifier: 4.2.1
+        version: 4.2.1(vite@7.3.1(@types/node@25.4.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
+      '@types/react':
+        specifier: 19.2.14
+        version: 19.2.14
+      '@types/react-dom':
+        specifier: 19.2.3
+        version: 19.2.3(@types/react@19.2.14)
+      '@vitejs/plugin-react':
+        specifier: 5.1.4
+        version: 5.1.4(vite@7.3.1(@types/node@25.4.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
+      tailwindcss:
+        specifier: 4.2.1
+        version: 4.2.1
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+      vite:
+        specifier: 7.3.1
+        version: 7.3.1(@types/node@25.4.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2)
+      vite-tsconfig-paths:
+        specifier: 6.1.1
+        version: 6.1.1(typescript@5.9.3)(vite@7.3.1(@types/node@25.4.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))
+      wrangler:
+        specifier: 4.72.0
+        version: 4.72.0(@cloudflare/workers-types@4.20260312.1)
+
+  apps/web:
+    dependencies:
+      '@maple-global/api-client':
+        specifier: workspace:*
+        version: link:../../packages/api-client
+      '@maple-global/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
       '@tanstack/react-query':

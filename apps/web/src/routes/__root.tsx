@@ -7,8 +7,10 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { ChatwootWidget } from "~/components/site/chatwoot-widget";
 import { SiteFooter } from "~/components/site/footer";
 import { SiteHeader } from "~/components/site/header";
+import { LocaleProvider } from "~/lib/locale";
 import appCss from "~/styles/app.css?url";
 
 export const Route = createRootRoute({
@@ -24,6 +26,12 @@ export const Route = createRootRoute({
       { title: "MAPLE-GLOBAL" },
     ],
     links: [
+      {
+        rel: "icon",
+        type: "image/svg+xml",
+        href: "/favicon.png",
+        sizes: "any",
+      },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       {
         rel: "preconnect",
@@ -54,18 +62,21 @@ function RootComponent() {
         <HeadContent />
       </head>
       <body className="site-shell bg-white dark:bg-[#0a0a0a] text-black dark:text-white min-h-screen flex flex-col antialiased">
-        <SiteHeader />
+        <LocaleProvider>
+          <SiteHeader />
 
-        <main className="flex-1 w-full mx-auto relative z-10 pt-[72px]">
-          <Outlet />
-        </main>
+          <main className="flex-1 w-full mx-auto relative z-10 pt-[72px]">
+            <Outlet />
+          </main>
 
-        <SiteFooter />
+          <SiteFooter />
 
-        {import.meta.env.DEV ? (
-          <TanStackRouterDevtools position="bottom-right" />
-        ) : null}
-        <Scripts />
+          {import.meta.env.DEV ? (
+            <TanStackRouterDevtools position="bottom-right" />
+          ) : null}
+          <ChatwootWidget />
+          <Scripts />
+        </LocaleProvider>
       </body>
     </html>
   );

@@ -55,29 +55,34 @@ export const megaMenus: MegaMenu[] = [
         links: [
           {
             label: "Research Index",
-            href: "/about#research",
-            description: "An index of all MAPLE-GLOBAL research publications and technical papers."
+            href: "/research",
+            description:
+              "An index of all MAPLE-GLOBAL research publications and technical papers.",
           },
           {
             label: "Research Overview",
-            href: "/about#journal",
-            description: "How we approach building safe and powerful general purpose technologies."
+            href: "/about#research",
+            description:
+              "How we approach building safe and powerful general purpose technologies.",
           },
           {
             label: "Research Residency",
-            href: "/about",
-            description: "A year-long program to transition your career into deep learning research."
+            href: "/research#residency",
+            description:
+              "A year-long program to transition your career into deep learning research.",
           },
           {
             label: "MAPLE-GLOBAL for Science",
-            href: "/about",
-            description: "Accelerating scientific discovery through advanced intelligence."
+            href: "/research#science",
+            description:
+              "Accelerating scientific discovery through advanced intelligence.",
           },
           {
             label: "Safety",
             href: "/about#trust",
-            description: "Ensuring our systems are robust, trustworthy, and aligned with human values."
-          }
+            description:
+              "Ensuring our systems are robust, trustworthy, and aligned with human values.",
+          },
         ],
       },
       {
@@ -85,19 +90,21 @@ export const megaMenus: MegaMenu[] = [
         links: [
           {
             label: "Omni-4.5 o1",
-            href: "/#launches",
-            description: "Our newest capabilities reasoning systematically through complex challenges.",
+            href: "/research/maple-reasoning-system-card",
+            description:
+              "Our newest capabilities reasoning systematically through complex challenges.",
           },
           {
             label: "Omni-4",
-            href: "/#launches",
-            description: "Highly capable multimodal models for text, vision, and audio."
+            href: "/research/domain-rich-training-playbook",
+            description:
+              "Highly capable multimodal models for text, vision, and audio.",
           },
           {
             label: "Omni Vision 3",
-            href: "/#launches",
-            description: "Next-generation image and spatial understanding."
-          }
+            href: "/research/scientific-copilot-workflows",
+            description: "Next-generation image and spatial understanding.",
+          },
         ],
       },
     ],
@@ -105,7 +112,7 @@ export const megaMenus: MegaMenu[] = [
       eyebrow: "Our Approach",
       title: "Building safe and beneficial AI.",
       body: "We are dedicated to creating systems that outthink complex challenges while remaining deeply aligned with human intent.",
-      href: "/about",
+      href: "/research",
       cta: "Explore Research",
       stats: [],
     },
@@ -119,24 +126,28 @@ export const megaMenus: MegaMenu[] = [
         links: [
           {
             label: "MAPLE-GLOBAL Web",
-            href: "/#products",
-            description: "The most capable and intelligent web assistant for everyday tasks."
+            href: "/products",
+            description:
+              "The most capable and intelligent web assistant for everyday tasks.",
           },
           {
             label: "MAPLE-GLOBAL Enterprise",
-            href: "/pricing",
-            description: "Enterprise-grade security and privacy for large organizations."
+            href: "/business",
+            description:
+              "Enterprise-grade security and privacy for large organizations.",
           },
           {
             label: "MAPLE-GLOBAL Team",
-            href: "/pricing",
-            description: "Collaborative workspaces for small and medium businesses."
+            href: "/products",
+            description:
+              "Collaborative workspaces for small and medium businesses.",
           },
           {
             label: "API Platform",
-            href: "/#api",
-            description: "Build applications with our industry-leading foundational models."
-          }
+            href: "/developers",
+            description:
+              "Build applications with our industry-leading foundational models.",
+          },
         ],
       },
       {
@@ -144,13 +155,15 @@ export const megaMenus: MegaMenu[] = [
         links: [
           {
             label: "Custom Instructions",
-            href: "/#products",
-            description: "Tailor responses to your specific operational workflows."
+            href: "/products",
+            description:
+              "Tailor responses to your specific operational workflows.",
           },
           {
             label: "Data Analysis",
             href: "/pricing#compare",
-            description: "Advanced data analytics embedded directly in your stack."
+            description:
+              "Advanced data analytics embedded directly in your stack.",
           },
         ],
       },
@@ -159,8 +172,8 @@ export const megaMenus: MegaMenu[] = [
       eyebrow: "Spotlight",
       title: "Unlock superhuman productivity.",
       body: "Empower your entire workforce with models that write, code, analyze, and automate on demand.",
-      href: "/pricing",
-      cta: "View Plans",
+      href: "/products",
+      cta: "View Products",
       stats: [],
     },
   },
@@ -173,19 +186,21 @@ export const megaMenus: MegaMenu[] = [
         links: [
           {
             label: "Enterprise",
-            href: "/pricing#enterprise",
-            description: "Deploy MAPLE-GLOBAL at scale with enterprise-grade security."
+            href: "/business",
+            description:
+              "Deploy MAPLE-GLOBAL at scale with enterprise-grade security.",
           },
           {
             label: "Team",
-            href: "/pricing",
-            description: "Bring the team together in one shared intelligent workspace."
+            href: "/products",
+            description:
+              "Bring the team together in one shared intelligent workspace.",
           },
           {
             label: "Education",
-            href: "/#global",
-            description: "Tools for students, teachers, and university staff."
-          }
+            href: "/foundation",
+            description: "Tools for students, teachers, and university staff.",
+          },
         ],
       },
       {
@@ -193,13 +208,15 @@ export const megaMenus: MegaMenu[] = [
         links: [
           {
             label: "Customer Service",
-            href: "/about",
-            description: "Automate edge cases and provide 24/7 intelligent routing."
+            href: "/business/trust-bank-donation-personalization",
+            description:
+              "Automate edge cases and provide 24/7 intelligent routing.",
           },
           {
             label: "Software Engineering",
-            href: "/#",
-            description: "Write better code faster alongside an expert pair-programmer."
+            href: "/business/higgsfield-video-concepts",
+            description:
+              "Write better code faster alongside an expert pair-programmer.",
           },
         ],
       },
@@ -208,8 +225,8 @@ export const megaMenus: MegaMenu[] = [
       eyebrow: "For Business",
       title: "Scale intelligence across your organization.",
       body: "From Fortune 500s to fast-growth startups, MAPLE-GLOBAL transforms how teams operate, strategize, and deliver.",
-      href: "/login",
-      cta: "Contact Sales",
+      href: "/business",
+      cta: "View Case Studies",
       stats: [],
     },
   },
@@ -222,19 +239,22 @@ export const megaMenus: MegaMenu[] = [
         links: [
           {
             label: "Developer Documentation",
-            href: "/#",
-            description: "Guides, tutorials, and API reference for building apps."
+            href: "/developers/docs",
+            description:
+              "Guides, tutorials, and API reference for building apps.",
           },
           {
             label: "Platform API",
-            href: "/pricing#compare",
-            description: "Integrate powerful models into your existing products."
+            href: "/developers",
+            description:
+              "Integrate powerful models into your existing products.",
           },
           {
             label: "Playground",
             href: "/login",
-            description: "Experiment with models in an interactive environment."
-          }
+            description:
+              "Experiment with models in an interactive environment.",
+          },
         ],
       },
       {
@@ -242,13 +262,14 @@ export const megaMenus: MegaMenu[] = [
         links: [
           {
             label: "Developer Forum",
-            href: "/#",
-            description: "Discuss ideas, ask questions, and share what you've built."
+            href: "/developers/forum",
+            description:
+              "Discuss ideas, ask questions, and share what you've built.",
           },
           {
             label: "Status",
-            href: "/#",
-            description: "Real-time updates on API and service availability."
+            href: "/developers/status",
+            description: "Real-time updates on API and service availability.",
           },
         ],
       },
@@ -257,7 +278,7 @@ export const megaMenus: MegaMenu[] = [
       eyebrow: "Build with us",
       title: "The intelligence layer for your applications.",
       body: "Give your software the ability to see, hear, speak, and reason using the most advanced AI platform available.",
-      href: "/login",
+      href: "/developers",
       cta: "Start Building",
       stats: [],
     },
@@ -305,8 +326,8 @@ export const megaMenus: MegaMenu[] = [
       eyebrow: "Company",
       title: "A design and engineering practice focused on modern AI brands.",
       body: "We build narrative systems, application surfaces, and launch tooling that feel premium in motion as well as in static comps.",
-      href: "/about#contact",
-      cta: "Contact MAPLE-GLOBAL",
+      href: "/foundation",
+      cta: "View Foundation",
       stats: [
         { label: "Delivery model", value: "Design + code" },
         { label: "Coverage", value: "Global" },
@@ -322,7 +343,7 @@ export const footerColumns: FooterColumn[] = [
     links: [
       {
         label: "Research overview",
-        href: "/about#research",
+        href: "/research",
         description: "Principles for premium AI storytelling.",
       },
       {
@@ -342,12 +363,12 @@ export const footerColumns: FooterColumn[] = [
     links: [
       {
         label: "MAPLE-GLOBAL Studio",
-        href: "/#products",
+        href: "/products",
         description: "Launch pages and visual systems.",
       },
       {
         label: "MAPLE-GLOBAL Agents",
-        href: "/#operations",
+        href: "/products",
         description: "Operational copilots and workflows.",
       },
       {
@@ -362,7 +383,7 @@ export const footerColumns: FooterColumn[] = [
     links: [
       {
         label: "For SaaS teams",
-        href: "/pricing#tiers",
+        href: "/business",
         description: "Subscription plans and rollout support.",
       },
       {
@@ -372,7 +393,7 @@ export const footerColumns: FooterColumn[] = [
       },
       {
         label: "Book a consult",
-        href: "mailto:hello@MAPLE-GLOBAL.dev",
+        href: "mailto:hello@maple-global.ai",
         description: "Talk through your next release.",
       },
     ],
@@ -381,9 +402,9 @@ export const footerColumns: FooterColumn[] = [
     title: "Developers",
     links: [
       {
-        label: "Architecture",
-        href: "/about#systems",
-        description: "Web, auth, billing, and shared packages.",
+        label: "Documentation",
+        href: "/developers/docs",
+        description: "API, workflows, and implementation reference.",
       },
       {
         label: "Workspace login",
@@ -391,9 +412,9 @@ export const footerColumns: FooterColumn[] = [
         description: "Access your account and workspace.",
       },
       {
-        label: "Release hygiene",
-        href: "/about#delivery",
-        description: "Build checks, versions, and rollout flow.",
+        label: "Status",
+        href: "/developers/status",
+        description: "Platform health and deployment signals.",
       },
     ],
   },
@@ -411,9 +432,9 @@ export const footerColumns: FooterColumn[] = [
         description: "Work with MAPLE-GLOBAL.",
       },
       {
-        label: "hello@MAPLE-GLOBAL.dev",
-        href: "mailto:hello@MAPLE-GLOBAL.dev",
-        description: "General enquiries and partnerships.",
+        label: "Foundation",
+        href: "/foundation",
+        description: "Public-interest initiatives and programs.",
       },
     ],
   },
@@ -483,8 +504,7 @@ export const pricingPlans: PricingPlan[] = [
   },
   {
     name: "Enterprise",
-    tagline:
-      "For organizations with custom security and support needs.",
+    tagline: "For organizations with custom security and support needs.",
     description:
       "Custom scopes, security reviews, white-glove onboarding, and SLAs.",
     price: {
@@ -493,7 +513,7 @@ export const pricingPlans: PricingPlan[] = [
     },
     yearlyNote: "Annual agreements available",
     cta: "Talk to sales",
-    href: "mailto:hello@MAPLE-GLOBAL.dev?subject=Enterprise%20Pricing",
+    href: "mailto:hello@maple-global.dev?subject=Enterprise%20Pricing",
     accent: "from-[#d8fbff] via-[#77dced] to-[#2996be]",
     features: [
       "Custom deployment and launch advisory",

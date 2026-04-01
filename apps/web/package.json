@@ -1,18 +1,22 @@
 {
-  "name": "@MAPLE-GLOBAL/web",
+  "name": "@maple-global/web",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite dev --host 0.0.0.0 --port 3000",
+    "dev": "pnpm run dev:local",
+    "dev:local": "vite dev --host 0.0.0.0 --port 3000",
+    "dev:dev": "vite dev --host 0.0.0.0 --port 3000 --mode dev",
     "build": "vite build && tsc --noEmit",
     "preview": "vite preview --port 3000",
+    "deploy": "wrangler deploy",
+    "deploy:all": "pnpm run deploy && pnpm --dir ../server deploy",
     "check-types": "tsc --noEmit",
     "lint": "biome check src/routes src/components src/lib src/router.tsx package.json tsconfig.json vite.config.ts wrangler.jsonc .env.example",
     "cf-typegen": "wrangler types"
   },
   "dependencies": {
-    "@MAPLE-GLOBAL/api-client": "workspace:*",
-    "@MAPLE-GLOBAL/i18n": "workspace:*",
+    "@maple-global/api-client": "workspace:*",
+    "@maple-global/i18n": "workspace:*",
     "@tanstack/react-query": "5.90.21",
     "@tanstack/react-router": "1.166.7",
     "@tanstack/react-router-devtools": "1.166.7",
