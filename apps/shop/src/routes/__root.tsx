@@ -1,13 +1,14 @@
 /// <reference types="vite/client" />
 
 import {
-  Link,
   createRootRoute,
   HeadContent,
+  Link,
   Outlet,
   Scripts,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { shopButtonClass } from "~/components/shop/button";
 import { ShopRail } from "~/components/shop/rail";
 import { ShopStateProvider } from "~/components/shop/shop-state";
 import { createEmptyShopCatalog, loadShopCatalog } from "~/lib/shop-api";
@@ -96,16 +97,13 @@ function RootErrorComponent() {
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <button
-                className="inline-flex h-12 items-center justify-center rounded-full bg-[var(--shop-brand)] px-6 text-[15px] font-medium text-white"
+                className={shopButtonClass({ variant: "brand" })}
                 onClick={() => window.location.reload()}
                 type="button"
               >
                 Retry
               </button>
-              <Link
-                className="inline-flex h-12 items-center justify-center rounded-full border border-black/10 bg-white px-6 text-[15px] font-medium text-[#111]"
-                to="/"
-              >
+              <Link className={shopButtonClass({ variant: "neutral" })} to="/">
                 Go home
               </Link>
             </div>

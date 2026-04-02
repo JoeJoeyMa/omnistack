@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { siteButtonClass } from "~/components/ui/button";
 import { useCopyText, useLocalizedValue } from "~/lib/locale";
 
 export const Route = createFileRoute("/about")({
@@ -141,13 +142,19 @@ function AboutPage() {
             <div className="mt-8 flex gap-4 flex-wrap">
               <a
                 href="#trust"
-                className="inline-flex h-[48px] items-center justify-center rounded-full bg-white dark:bg-black border border-gray-300 dark:border-white/10 px-8 text-[14px] font-medium text-black dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
+                className={siteButtonClass({
+                  size: "hero",
+                  variant: "secondary",
+                })}
               >
                 {copy("Our principles")}
               </a>
               <Link
                 to="/foundation"
-                className="inline-flex h-[48px] items-center justify-center rounded-full border border-gray-300 dark:border-white/20 px-8 text-[14px] font-medium text-black dark:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
+                className={siteButtonClass({
+                  size: "hero",
+                  variant: "outline",
+                })}
               >
                 {copy("Foundation")} →
               </Link>
@@ -324,7 +331,7 @@ function AboutPage() {
           </p>
           <Link
             to="/careers"
-            className="inline-flex h-[52px] items-center justify-center rounded-full border border-gray-300 dark:border-white/20 px-10 text-[15px] font-medium text-black dark:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
+            className={siteButtonClass({ size: "xl", variant: "outline" })}
           >
             {copy("View all careers")}
           </Link>

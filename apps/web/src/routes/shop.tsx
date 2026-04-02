@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { siteButtonClass } from "~/components/ui/button";
 import { getWebShopUrl } from "~/lib/runtime-urls";
 
 export const Route = createFileRoute("/shop")({
@@ -34,7 +35,10 @@ function ShopRedirectPage() {
         </p>
         {shopUrl ? (
           <a
-            className="mt-6 inline-flex items-center justify-center rounded-full border border-black/10 bg-black px-5 py-3 text-[14px] font-semibold text-white transition-colors hover:bg-[#222] dark:border-white/10 dark:bg-white dark:text-black dark:hover:bg-[#f1f1f1]"
+            className={siteButtonClass({
+              className: "mt-6",
+              variant: "primary",
+            })}
             href={shopUrl}
           >
             Open Shop

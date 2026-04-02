@@ -7,6 +7,7 @@ import {
   Wrench,
 } from "lucide-react";
 import { PageHero, SectionIntro } from "~/components/site/editorial";
+import { siteButtonClass } from "~/components/ui/button";
 import { useCopyText, useLocalizedValue } from "~/lib/locale";
 import { newsEntries, productHighlights } from "~/lib/site-content";
 
@@ -121,7 +122,10 @@ function ProductsPage() {
                   {localizedGuidedLabsFeature.excerpt}
                 </p>
                 <Link
-                  className="mt-8 inline-flex h-12 items-center justify-center rounded-full border border-white/14 bg-white text-[15px] font-medium text-[#05070a] transition-colors hover:bg-white/90"
+                  className={siteButtonClass({
+                    className: "mt-8",
+                    variant: "light",
+                  })}
                   params={{ slug: localizedGuidedLabsFeature.slug }}
                   to="/news/$slug"
                 >

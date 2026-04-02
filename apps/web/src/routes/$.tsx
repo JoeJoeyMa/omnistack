@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
+import { siteButtonClass } from "~/components/ui/button";
 import { useCopyText } from "~/lib/locale";
 
 export const Route = createFileRoute("/$")({
@@ -25,19 +26,19 @@ function NotFound() {
       <div className="flex flex-wrap items-center justify-center gap-4">
         <Link
           to="/"
-          className="inline-flex h-[48px] items-center justify-center border border-gray-300 dark:border-white/20 rounded-full px-8 text-[15px] font-medium transition-colors hover:bg-gray-100 dark:hover:bg-white/10"
+          className={siteButtonClass({ size: "hero", variant: "outline" })}
         >
           {copy("Return home")}
         </Link>
         <Link
           to="/pricing"
-          className="inline-flex h-[48px] items-center justify-center bg-white dark:bg-black border border-gray-300 dark:border-white/10 text-black dark:text-white rounded-full px-8 text-[15px] font-medium transition-colors hover:bg-gray-50 dark:hover:bg-white/5 gap-1"
+          className={siteButtonClass({ size: "hero", variant: "secondary" })}
         >
           {copy("View pricing")} <ArrowUpRight className="h-4 w-4" />
         </Link>
         <Link
           to="/news"
-          className="inline-flex h-[48px] items-center justify-center border border-gray-300 dark:border-white/20 rounded-full px-8 text-[15px] font-medium transition-colors hover:bg-gray-100 dark:hover:bg-white/10"
+          className={siteButtonClass({ size: "hero", variant: "outline" })}
         >
           {copy("Open newsroom")}
         </Link>

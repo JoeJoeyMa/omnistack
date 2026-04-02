@@ -5,6 +5,7 @@ import {
   PageHero,
   SectionIntro,
 } from "~/components/site/editorial";
+import { siteButtonClass } from "~/components/ui/button";
 import { useCopyText, useLocalizedValue } from "~/lib/locale";
 import {
   foundationPillars,
@@ -60,7 +61,10 @@ function FoundationPage() {
             )}
           </p>
           <Link
-            className="mt-8 inline-flex items-center gap-2 rounded-full border border-black/10 px-5 py-3 text-sm font-medium dark:border-white/10"
+            className={siteButtonClass({
+              className: "mt-8",
+              variant: "outline",
+            })}
             to="/about"
           >
             {copy("Learn about MAPLE-GLOBAL")}

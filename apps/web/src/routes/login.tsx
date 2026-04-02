@@ -647,6 +647,8 @@ function LoginPage() {
         ),
     [accounts, copy],
   );
+  const accountChipClass =
+    "inline-flex h-12 items-center justify-center rounded-full px-4 text-[14px] font-medium leading-none";
 
   return (
     <div className="min-h-screen bg-[linear-gradient(180deg,#f7f3ec_0%,#f3f5f7_48%,#eef1f6_100%)] px-6 py-10 text-black dark:bg-[linear-gradient(180deg,#0d0f12_0%,#101318_48%,#121723_100%)] dark:text-white sm:px-8">
@@ -710,21 +712,32 @@ function LoginPage() {
                   {user.email}
                 </p>
                 <div className="mt-5 flex flex-wrap gap-3">
-                  <span className="rounded-full bg-black px-3 py-1 text-[12px] font-semibold text-white dark:bg-white dark:text-black">
+                  <span
+                    className={cn(
+                      accountChipClass,
+                      "bg-black text-white dark:bg-white dark:text-black",
+                    )}
+                  >
                     {user.emailVerified
                       ? copy("Email verified")
                       : copy("Email not verified")}
                   </span>
                   {providerLabels.map((label) => (
                     <span
-                      className="rounded-full border border-black/10 px-3 py-1 text-[12px] font-semibold text-gray-600 dark:border-white/10 dark:text-gray-300"
+                      className={cn(
+                        accountChipClass,
+                        "border border-black/10 text-gray-600 dark:border-white/10 dark:text-gray-300",
+                      )}
                       key={label}
                     >
                       {label}
                     </span>
                   ))}
                   <button
-                    className="rounded-full border border-gray-200 px-4 py-2 text-[14px] font-medium transition-colors hover:border-black hover:text-black dark:border-white/10 dark:hover:border-white dark:hover:text-white"
+                    className={cn(
+                      accountChipClass,
+                      "border border-gray-200 transition-colors hover:border-black hover:text-black dark:border-white/10 dark:hover:border-white dark:hover:text-white",
+                    )}
                     disabled={accountPending}
                     onClick={handleSignOut}
                     type="button"

@@ -29,6 +29,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { shopButtonClass } from "~/components/shop/button";
 import { PageFrame } from "~/components/shop/page-frame";
 import { useShopState } from "~/components/shop/shop-state";
 import { cn } from "~/components/shop/utils";
@@ -498,8 +499,7 @@ function CheckoutPage() {
           account.addresses[0];
 
         setCustomer((current) => ({
-          companyName:
-            current.companyName || account.profile.companyName || "",
+          companyName: current.companyName || account.profile.companyName || "",
           country:
             current.country === "US"
               ? account.profile.country || current.country
@@ -516,9 +516,7 @@ function CheckoutPage() {
         setShippingAddress((current) => ({
           city: current.city || defaultAddress.city,
           country:
-            current.country === "US"
-              ? defaultAddress.country
-              : current.country,
+            current.country === "US" ? defaultAddress.country : current.country,
           line1: current.line1 || defaultAddress.line1,
           line2: current.line2 || defaultAddress.line2 || "",
           postalCode: current.postalCode || defaultAddress.postalCode,
@@ -829,7 +827,10 @@ function CheckoutPage() {
 
               <div className="mt-8 flex justify-center">
                 <Link
-                  className="inline-flex h-12 items-center justify-center rounded-full bg-gray-900 px-8 text-[15px] font-semibold !text-white shadow-sm hover:bg-gray-800 transition-colors"
+                  className={shopButtonClass({
+                    className: "px-8",
+                    variant: "dark",
+                  })}
                   search={{ q: "" }}
                   to="/categories"
                 >
@@ -886,7 +887,11 @@ function CheckoutPage() {
                   Looks like you haven't added anything yet.
                 </p>
                 <Link
-                  className="mt-8 inline-flex h-11 items-center justify-center rounded-md bg-[#635BFF] px-6 text-[15px] font-medium text-white shadow-sm hover:bg-[#4E44E7] transition-colors"
+                  className={shopButtonClass({
+                    className: "mt-8 rounded-md",
+                    size: "sm",
+                    variant: "brand",
+                  })}
                   search={{ q: "" }}
                   to="/categories"
                 >

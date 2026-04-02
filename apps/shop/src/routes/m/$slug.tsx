@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Check, ChevronDown, Menu, Search, Star } from "lucide-react";
 import { useDeferredValue, useMemo, useState } from "react";
+import { shopButtonClass } from "~/components/shop/button";
 import { PageFrame } from "~/components/shop/page-frame";
 import { ProductCard } from "~/components/shop/product-card";
 import { getStoreProfile, parsePrice } from "~/lib/shop-catalog";
@@ -88,28 +89,38 @@ function StorePage() {
                     {profile.name}
                   </p>
                 )}
-                <button
-                  className="mt-4 inline-flex items-center gap-2 rounded-full bg-white/12 px-4 py-2 text-[14px] text-white/92 backdrop-blur"
-                  type="button"
+                <div
+                  className={shopButtonClass({
+                    className: "mt-4 border-transparent",
+                    size: "chip",
+                    variant: "overlay",
+                  })}
                 >
                   <Star className="h-3.5 w-3.5 fill-current" />
                   {profile.rating} stars: {profile.reviews} Reviews
-                </button>
+                </div>
               </div>
               <div className="flex flex-wrap items-center gap-3">
-                <button
-                  className="inline-flex h-11 items-center justify-center rounded-full bg-white px-5 text-[14px] font-medium text-black"
-                  type="button"
+                <Link
+                  className={shopButtonClass({
+                    size: "sm",
+                    variant: "overlaySolid",
+                  })}
+                  search={{ q: "" }}
+                  to="/categories"
                 >
-                  Follow
-                </button>
-                <button
-                  className="inline-flex h-11 items-center justify-center rounded-full border border-white/24 bg-white/10 px-5 text-[14px] font-medium text-white backdrop-blur"
-                  type="button"
+                  Browse services
+                </Link>
+                <a
+                  className={shopButtonClass({
+                    size: "sm",
+                    variant: "overlay",
+                  })}
+                  href="#store-services"
                 >
                   <Menu className="mr-2 h-4 w-4" />
-                  Store menu
-                </button>
+                  Jump to services
+                </a>
               </div>
             </div>
           </div>
@@ -129,7 +140,10 @@ function StorePage() {
                 "Deployment",
               ].map((item) => (
                 <Link
-                  className="inline-flex items-center gap-3 rounded-full border border-black/8 bg-[#f7f7f8] px-4 py-2 text-[14px] font-medium"
+                  className={shopButtonClass({
+                    size: "chip",
+                    variant: "soft",
+                  })}
                   key={item}
                   params={{ slug: profile.slug }}
                   to="/m/$slug"
@@ -161,7 +175,7 @@ function StorePage() {
           </div>
         </section>
 
-        <section className="grid gap-4">
+        <section className="grid gap-4" id="store-services">
           <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
             <div>
               <h1 className="text-[32px] font-medium tracking-[-0.04em]">
@@ -183,13 +197,10 @@ function StorePage() {
 
           <div className="flex flex-wrap gap-2">
             <button
-              className="inline-flex h-11 items-center rounded-full border border-black/8 bg-white px-4 text-[14px]"
-              type="button"
-            >
-              Filter
-            </button>
-            <button
-              className="inline-flex h-11 items-center gap-2 rounded-full border border-black/8 bg-white px-4 text-[14px]"
+              className={shopButtonClass({
+                size: "sm",
+                variant: "filter",
+              })}
               onClick={() =>
                 setSortBy((current) =>
                   current === "most-sales"
@@ -209,10 +220,10 @@ function StorePage() {
               <ChevronDown className="h-4 w-4" />
             </button>
             <button
-              className={onSaleOnly
-                ? "inline-flex h-11 items-center gap-2 rounded-full border border-[var(--shop-brand)] bg-[rgba(84,51,235,0.08)] px-4 text-[14px] text-[var(--shop-brand)]"
-                : "inline-flex h-11 items-center gap-2 rounded-full border border-black/8 bg-white px-4 text-[14px]"
-              }
+              className={shopButtonClass({
+                size: "sm",
+                variant: onSaleOnly ? "filterActive" : "filter",
+              })}
               onClick={() => setOnSaleOnly((current) => !current)}
               type="button"
             >
@@ -220,17 +231,10 @@ function StorePage() {
               Bundle offer
             </button>
             <button
-              className="inline-flex h-11 items-center gap-2 rounded-full border border-black/8 bg-white px-4 text-[14px]"
-              type="button"
-            >
-              Price
-              <ChevronDown className="h-4 w-4" />
-            </button>
-            <button
-              className={inStockOnly
-                ? "inline-flex h-11 items-center gap-2 rounded-full border border-[var(--shop-brand)] bg-[rgba(84,51,235,0.08)] px-4 text-[14px] text-[var(--shop-brand)]"
-                : "inline-flex h-11 items-center gap-2 rounded-full border border-black/8 bg-white px-4 text-[14px]"
-              }
+              className={shopButtonClass({
+                size: "sm",
+                variant: inStockOnly ? "filterActive" : "filter",
+              })}
               onClick={() => setInStockOnly((current) => !current)}
               type="button"
             >

@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import type { PropsWithChildren, ReactNode } from "react";
+import { siteButtonClass } from "~/components/ui/button";
 import { useCopyText } from "~/lib/locale";
 import type { EditorialEntry, NarrativeSection } from "~/lib/site-content";
 
@@ -10,8 +11,7 @@ type HeroAction = {
 };
 
 function ActionLink({ href, label }: HeroAction) {
-  const className =
-    "inline-flex h-12 items-center justify-center rounded-full border border-black/10 px-6 text-sm font-medium !text-black [-webkit-text-fill-color:currentColor] transition-colors hover:border-black/20 hover:bg-white dark:border-white/20 dark:!text-white dark:hover:border-white/30 dark:hover:bg-white/5";
+  const className = siteButtonClass({ variant: "outline" });
 
   if (href.startsWith("http") || href.startsWith("mailto:")) {
     return (

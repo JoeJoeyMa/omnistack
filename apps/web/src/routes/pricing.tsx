@@ -1,4 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { SiteLink } from "~/components/site/site-link";
+import { siteButtonClass } from "~/components/ui/button";
 import { useCopyText, useLocalizedValue } from "~/lib/locale";
 
 export const Route = createFileRoute("/pricing")({
@@ -249,13 +251,13 @@ function PricingPage() {
         <div className="mt-8 flex items-center justify-center gap-4">
           <a
             href="mailto:sales@maple-global.ai"
-            className="inline-flex h-[48px] items-center justify-center rounded-full bg-white dark:bg-black border border-gray-300 dark:border-white/10 px-8 text-[15px] font-medium text-black dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
+            className={siteButtonClass({ size: "hero", variant: "secondary" })}
           >
             {copy("Contact sales")}
           </a>
           <Link
             to="/login"
-            className="inline-flex h-[48px] items-center justify-center rounded-full border border-gray-300 dark:border-white/20 px-8 text-[15px] font-medium text-black dark:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
+            className={siteButtonClass({ size: "hero", variant: "outline" })}
           >
             {copy("Get API key")}
           </Link>
@@ -320,16 +322,16 @@ function PricingPage() {
                   </li>
                 ))}
               </ul>
-              <a
+              <SiteLink
+                className={siteButtonClass({
+                  className: "w-full h-[44px] px-5 text-[14px]",
+                  size: "sm",
+                  variant: plan.highlight ? "secondary" : "outline",
+                })}
                 href={plan.ctaHref}
-                className={`w-full inline-flex h-[44px] items-center justify-center rounded-full text-[14px] font-medium transition-colors ${
-                  plan.highlight
-                    ? "bg-white dark:bg-black text-black dark:text-white border border-black dark:border-white/50 hover:bg-gray-50 dark:hover:bg-white/5"
-                    : "border border-gray-300 dark:border-white/20 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-white/10"
-                }`}
               >
                 {plan.cta}
-              </a>
+              </SiteLink>
             </div>
           ))}
         </div>
@@ -538,7 +540,7 @@ function PricingPage() {
           </p>
           <Link
             to="/login"
-            className="inline-flex h-[52px] items-center justify-center rounded-full bg-white dark:bg-black border border-gray-300 dark:border-white/10 px-10 text-[15px] font-medium text-black dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
+            className={siteButtonClass({ size: "xl", variant: "secondary" })}
           >
             {copy("Get started free")}
           </Link>

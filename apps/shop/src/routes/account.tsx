@@ -17,6 +17,7 @@ import {
   UserRound,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { shopButtonClass } from "~/components/shop/button";
 import { PageFrame } from "~/components/shop/page-frame";
 import { cn } from "~/components/shop/utils";
 import { useShopSessionUser } from "~/lib/auth-session";
@@ -116,7 +117,9 @@ function AccountPage() {
   const [profileNotice, setProfileNotice] = useState("");
   const [addressNotice, setAddressNotice] = useState("");
   const [addressSaving, setAddressSaving] = useState(false);
-  const [addressDeletingId, setAddressDeletingId] = useState<string | null>(null);
+  const [addressDeletingId, setAddressDeletingId] = useState<string | null>(
+    null,
+  );
   const [editingAddressId, setEditingAddressId] = useState<string | null>(null);
   const [recentOrders, setRecentOrders] = useState<
     Awaited<ReturnType<typeof loadShopAccount>>["recentOrders"]
@@ -173,8 +176,12 @@ function AccountPage() {
           fullName: account.profile.fullName,
           phone: account.profile.phone || "",
         });
-        const defaultAddress = account.addresses.find((address) => address.isDefault);
-        setAddressForm(defaultAddress ? addressToForm(defaultAddress) : emptyAddressForm());
+        const defaultAddress = account.addresses.find(
+          (address) => address.isDefault,
+        );
+        setAddressForm(
+          defaultAddress ? addressToForm(defaultAddress) : emptyAddressForm(),
+        );
       })
       .catch((error) => {
         if (!cancelled) {
@@ -221,7 +228,9 @@ function AccountPage() {
       window.location.reload();
     } catch (error) {
       setAccountError(
-        error instanceof Error ? error.message : "Unable to sign out right now.",
+        error instanceof Error
+          ? error.message
+          : "Unable to sign out right now.",
       );
       setLoggingOut(false);
     }
@@ -254,9 +263,7 @@ function AccountPage() {
       setProfileNotice("Profile saved.");
     } catch (error) {
       setAccountError(
-        error instanceof Error
-          ? error.message
-          : "Unable to save your profile.",
+        error instanceof Error ? error.message : "Unable to save your profile.",
       );
     } finally {
       setProfileSaving(false);
@@ -378,8 +385,12 @@ function AccountPage() {
             checkout using your saved details.
           </p>
           <button
-            className="inline-flex h-12 w-full items-center justify-center rounded-full bg-[#635BFF] px-8 text-[15px] font-semibold text-white shadow-sm transition-all hover:bg-[#4E44E7]"
+            className={shopButtonClass({
+              className: "w-full",
+              variant: "brand",
+            })}
             onClick={handleLoginRedirect}
+            type="button"
           >
             Sign in
           </button>
@@ -435,6 +446,7 @@ function AccountPage() {
                   )}
                   disabled={loggingOut}
                   onClick={handleSignOut}
+                  type="button"
                 >
                   <LogOut className="h-4 w-4" />
                   {loggingOut ? "Signing out..." : "Sign out"}
@@ -500,8 +512,9 @@ function AccountPage() {
                             </p>
                             <p className="mt-2 text-sm text-gray-600">
                               {order.lineItems.length} items ·{" "}
-                              {(order.customer.fullName || order.customer.email)
-                                .trim()}
+                              {(
+                                order.customer.fullName || order.customer.email
+                              ).trim()}
                             </p>
                             {order.shippingAddress ? (
                               <p className="mt-1 text-sm text-gray-500">
@@ -577,8 +590,12 @@ function AccountPage() {
                   </p>
                   <div className="mt-6">
                     <button
-                      className="inline-flex items-center justify-center rounded-full bg-gray-900 px-6 py-2.5 text-[14px] font-medium text-white transition hover:bg-gray-800"
+                      className={shopButtonClass({
+                        size: "sm",
+                        variant: "dark",
+                      })}
                       onClick={() => window.location.assign("/categories")}
+                      type="button"
                     >
                       Start browsing
                     </button>
@@ -730,7 +747,10 @@ function AccountPage() {
                     </div>
 
                     <button
-                      className="inline-flex items-center justify-center gap-2 rounded-full border border-gray-200 px-4 py-2 text-[13px] font-medium text-gray-700 transition hover:bg-gray-50"
+                      className={shopButtonClass({
+                        size: "chip",
+                        variant: "soft",
+                      })}
                       onClick={startNewAddress}
                       type="button"
                     >
@@ -767,7 +787,9 @@ function AccountPage() {
                               </div>
                               <div className="mt-1 text-sm leading-6 text-gray-500">
                                 <div>{address.line1}</div>
-                                {address.line2 ? <div>{address.line2}</div> : null}
+                                {address.line2 ? (
+                                  <div>{address.line2}</div>
+                                ) : null}
                                 <div>
                                   {address.city}
                                   {address.stateProvince
@@ -781,7 +803,10 @@ function AccountPage() {
 
                             <div className="flex items-center gap-2">
                               <button
-                                className="inline-flex items-center justify-center gap-1 rounded-full border border-gray-200 px-3 py-1.5 text-[12px] font-medium text-gray-700 transition hover:bg-gray-50"
+                                className={shopButtonClass({
+                                  size: "compact",
+                                  variant: "soft",
+                                })}
                                 onClick={() => startEditAddress(address)}
                                 type="button"
                               >
@@ -789,7 +814,10 @@ function AccountPage() {
                                 Edit
                               </button>
                               <button
-                                className="inline-flex items-center justify-center gap-1 rounded-full border border-red-200 px-3 py-1.5 text-[12px] font-medium text-red-600 transition hover:bg-red-50"
+                                className={shopButtonClass({
+                                  size: "compact",
+                                  variant: "danger",
+                                })}
                                 disabled={addressDeletingId === address.id}
                                 onClick={() => handleDeleteAddress(address.id)}
                                 type="button"
@@ -953,7 +981,10 @@ function AccountPage() {
                       <div className="mt-5 flex flex-wrap items-center gap-3">
                         <button
                           className={cn(
-                            "inline-flex items-center justify-center gap-2 rounded-full bg-[#635BFF] px-5 py-2.5 text-[14px] font-semibold text-white transition hover:bg-[#4E44E7]",
+                            shopButtonClass({
+                              size: "sm",
+                              variant: "brand",
+                            }),
                             addressSaving && "cursor-not-allowed opacity-70",
                           )}
                           disabled={addressSaving}
@@ -968,7 +999,10 @@ function AccountPage() {
                           {addressSaving ? "Saving..." : "Save address"}
                         </button>
                         <button
-                          className="inline-flex items-center justify-center rounded-full border border-gray-200 px-5 py-2.5 text-[14px] font-medium text-gray-700 transition hover:bg-white"
+                          className={shopButtonClass({
+                            size: "sm",
+                            variant: "neutral",
+                          })}
                           onClick={() => {
                             setEditingAddressId(null);
                             setAddressForm(emptyAddressForm());

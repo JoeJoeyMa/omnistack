@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { shopButtonClass } from "~/components/shop/button";
 import { PageFrame } from "~/components/shop/page-frame";
 import { ProductCard } from "~/components/shop/product-card";
 import { useShopCatalog } from "~/lib/use-shop-catalog";
@@ -66,7 +67,10 @@ function CategoriesPage() {
             {topCategoryLinks.map((category) =>
               firstCategory ? (
                 <Link
-                  className="inline-flex items-center rounded-full border border-black/8 bg-white px-4 py-2 text-[14px] text-black/72 transition hover:border-black/14 hover:bg-black/[0.02]"
+                  className={shopButtonClass({
+                    size: "chip",
+                    variant: "filter",
+                  })}
                   key={category}
                   params={{
                     categoryId: firstCategory.categoryId,
@@ -79,7 +83,10 @@ function CategoriesPage() {
                 </Link>
               ) : (
                 <Link
-                  className="inline-flex items-center rounded-full border border-black/8 bg-white px-4 py-2 text-[14px] text-black/72 transition hover:border-black/14 hover:bg-black/[0.02]"
+                  className={shopButtonClass({
+                    size: "chip",
+                    variant: "filter",
+                  })}
                   key={category}
                   search={{ q: "" }}
                   to="/categories"
@@ -119,7 +126,9 @@ function CategoriesPage() {
                       />
                     </div>
                     <div className="p-5">
-                      <h2 className="text-[22px] font-medium">{collection.title}</h2>
+                      <h2 className="text-[22px] font-medium">
+                        {collection.title}
+                      </h2>
                       <p className="mt-2 text-[14px] text-black/58">
                         {collection.description}
                       </p>

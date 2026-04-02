@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpRight, ArrowUpRightFromCircle } from "lucide-react";
 import { CollectionCard, SectionIntro } from "~/components/site/editorial";
+import { siteButtonClass } from "~/components/ui/button";
 import { useCopyText, useLocalizedValue } from "~/lib/locale";
 import {
   businessEntries,
@@ -18,8 +19,7 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-const secondaryActionLinkClass =
-  "inline-flex h-12 items-center justify-center rounded-full border border-black/10 px-6 text-sm font-medium !text-black [-webkit-text-fill-color:currentColor] transition-colors hover:border-black/20 hover:bg-white dark:border-white/20 dark:!text-white dark:hover:border-white/30 dark:hover:bg-white/5";
+const secondaryActionLinkClass = siteButtonClass({ variant: "outline" });
 
 function HomePage() {
   const copy = useCopyText();
@@ -97,7 +97,10 @@ function HomePage() {
             <div className="mt-4 flex flex-wrap justify-center gap-2">
               {localizedHomeSuggestions.map((suggestion) => (
                 <Link
-                  className="rounded-full border border-black/10 bg-white px-4 py-2 text-[14px] font-medium text-black/70 transition-colors hover:border-black/20 hover:text-black dark:border-white/10 dark:bg-white/5 dark:text-white/70 dark:hover:border-white/20 dark:hover:text-white"
+                  className={siteButtonClass({
+                    size: "sm",
+                    variant: "subtle",
+                  })}
                   key={suggestion.label}
                   to={suggestion.href}
                 >

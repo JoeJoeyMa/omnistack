@@ -1,7 +1,7 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { ArrowUpRight, Menu, Search, X } from "lucide-react";
 import { useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
-import { cn } from "~/components/ui/button";
+import { cn, siteButtonClass } from "~/components/ui/button";
 import { authClient } from "~/lib/auth-client";
 import { useCopyText, useLocalizedValue } from "~/lib/locale";
 import { LocaleToggle } from "./locale-toggle";
@@ -200,11 +200,14 @@ export function SiteHeader() {
             {user ? (
               <>
                 <Link
-                  className="inline-flex items-center rounded-full border border-gray-200 bg-white px-3 py-1.5 text-[13px] font-medium text-black transition-colors hover:border-black dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:border-white"
+                  className={siteButtonClass({
+                    size: "compact",
+                    variant: "secondary",
+                  })}
                   onClick={closeAll}
                   to="/login"
                 >
-                  {userLabel}
+                  Info
                 </Link>
                 <button
                   className="text-[14px] font-medium transition-colors text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white"
@@ -226,7 +229,8 @@ export function SiteHeader() {
             )}
             <Link
               className={cn(
-                "inline-flex h-[36px] items-center justify-center rounded-full bg-white dark:bg-black px-[18px] text-[14px] font-medium text-black dark:text-white border border-gray-200 dark:border-white/10 transition-transform hover:scale-[1.02]",
+                siteButtonClass({ size: "nav", variant: "secondary" }),
+                "transition-transform hover:scale-[1.02]",
                 openMenuId ? "opacity-90 hover:opacity-100" : "",
               )}
               onClick={closeAll}

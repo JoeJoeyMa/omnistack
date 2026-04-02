@@ -5,6 +5,7 @@ import {
   DetailHero,
   RelatedEntries,
 } from "~/components/site/editorial";
+import { siteButtonClass } from "~/components/ui/button";
 import { useCopyText, useLocalizedValue } from "~/lib/locale";
 import { getEntry, getRelatedEntries } from "~/lib/site-content";
 
@@ -33,7 +34,10 @@ function NewsDetailPage() {
             )}
           </p>
           <Link
-            className="mt-8 inline-flex rounded-full border border-black/10 px-5 py-3 text-sm font-medium dark:border-white/10"
+            className={siteButtonClass({
+              className: "mt-8",
+              variant: "outline",
+            })}
             to="/news"
           >
             {copy("Return to the newsroom")}

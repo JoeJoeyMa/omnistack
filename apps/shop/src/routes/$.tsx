@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { shopButtonClass } from "~/components/shop/button";
 
 export const Route = createFileRoute("/$")({
   component: NotFoundPage,
@@ -18,14 +19,11 @@ function NotFoundPage() {
         the core flows instead.
       </p>
       <div className="mt-8 flex justify-center gap-3">
-        <Link
-          className="rounded-full bg-[var(--shop-brand)] px-6 py-3 text-white"
-          to="/"
-        >
+        <Link className={shopButtonClass({ variant: "brand" })} to="/">
           Go home
         </Link>
         <Link
-          className="rounded-full border border-black/10 bg-white px-6 py-3"
+          className={shopButtonClass({ variant: "neutral" })}
           search={{ q: "" }}
           to="/categories"
         >

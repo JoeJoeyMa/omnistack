@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ChevronRight, Star } from "lucide-react";
+import { shopButtonClass } from "~/components/shop/button";
 import { PageFrame } from "~/components/shop/page-frame";
 import { getCategoryDetail } from "~/lib/shop-catalog";
 import { useShopCatalog } from "~/lib/use-shop-catalog";
@@ -29,7 +30,10 @@ function CategoryDetailPage() {
               has not been mapped yet.
             </p>
             <Link
-              className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-[var(--shop-brand)] px-6 text-[15px] font-medium text-white"
+              className={shopButtonClass({
+                className: "mt-8",
+                variant: "brand",
+              })}
               search={{ q: "" }}
               to="/categories"
             >

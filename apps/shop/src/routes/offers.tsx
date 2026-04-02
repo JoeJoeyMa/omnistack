@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { shopButtonClass } from "~/components/shop/button";
 import { PageFrame } from "~/components/shop/page-frame";
 import { ProductCard } from "~/components/shop/product-card";
 import { productToCard } from "~/lib/shop-catalog";
@@ -35,14 +36,14 @@ function OffersPage() {
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link
-              className="inline-flex h-12 items-center justify-center rounded-full bg-[var(--shop-brand)] px-6 text-[15px] font-medium text-white shadow-[0_10px_28px_rgba(84,51,235,0.24)]"
+              className={shopButtonClass({ variant: "brand" })}
               search={{ q: "" }}
               to="/categories"
             >
               Browse all services
             </Link>
             <Link
-              className="inline-flex h-12 items-center justify-center rounded-full border border-black/10 bg-white px-6 text-[15px] font-medium text-[#111]"
+              className={shopButtonClass({ variant: "neutral" })}
               params={{ slug: "mapleglobal" }}
               to="/m/$slug"
             >

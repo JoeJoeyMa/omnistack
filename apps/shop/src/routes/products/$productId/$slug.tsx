@@ -13,6 +13,7 @@ import {
   X,
 } from "lucide-react";
 import { type FormEvent, useEffect, useMemo, useState } from "react";
+import { shopButtonClass } from "~/components/shop/button";
 import { PageFrame } from "~/components/shop/page-frame";
 import { ProductCard } from "~/components/shop/product-card";
 import { useShopState } from "~/components/shop/shop-state";
@@ -293,7 +294,10 @@ function ProductDetailPage() {
                   product has not been added to the mock catalog yet.
                 </p>
                 <Link
-                  className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-[var(--shop-brand)] px-6 text-[15px] font-medium text-white"
+                  className={shopButtonClass({
+                    className: "mt-8",
+                    variant: "brand",
+                  })}
                   search={{ q: "" }}
                   to="/categories"
                 >
@@ -745,7 +749,10 @@ function ProductDetailPage() {
 
             <div className="mt-8 grid gap-3">
               <button
-                className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-[var(--shop-brand)] px-6 text-[16px] font-medium text-white shadow-[rgba(255,255,255,0.32)_-0.5px_-0.5px_1px_0px_inset,rgba(255,255,255,0.32)_1px_1px_0.5px_0px_inset,rgba(84,51,235,0.28)_0px_12px_28px_0px] transition duration-300 hover:-translate-y-0.5 hover:shadow-[rgba(255,255,255,0.32)_-0.5px_-0.5px_1px_0px_inset,rgba(255,255,255,0.32)_1px_1px_0.5px_0px_inset,rgba(84,51,235,0.34)_0px_16px_34px_0px]"
+                className={shopButtonClass({
+                  size: "lg",
+                  variant: "brand",
+                })}
                 onClick={handleAddToCart}
                 type="button"
               >
@@ -759,7 +766,10 @@ function ProductDetailPage() {
                 )}
               </button>
               <button
-                className="inline-flex h-14 items-center justify-center rounded-full border border-black/10 bg-[#111] px-6 text-[16px] font-medium text-white shadow-[0_14px_28px_rgba(15,23,42,0.18)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#1b1b1c] hover:shadow-[0_18px_34px_rgba(15,23,42,0.22)]"
+                className={shopButtonClass({
+                  size: "lg",
+                  variant: "dark",
+                })}
                 onClick={handleBuyNow}
                 type="button"
               >
@@ -770,7 +780,11 @@ function ProductDetailPage() {
             <div className="mt-4 flex gap-2">
               <button
                 className={cn(
-                  "inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-full border border-black/8 bg-white text-[14px] shadow-[0_8px_18px_rgba(15,23,42,0.04)] transition duration-300 hover:-translate-y-0.5 hover:border-black/16 hover:bg-[#fbfbfc] hover:shadow-[0_14px_24px_rgba(15,23,42,0.08)]",
+                  shopButtonClass({
+                    className: "flex-1 shadow-[0_8px_18px_rgba(15,23,42,0.04)]",
+                    size: "sm",
+                    variant: "neutral",
+                  }),
                   isSaved &&
                     "border-black/18 bg-[#f7f4ff] text-[#111] ring-2 ring-[rgba(84,51,235,0.12)] hover:bg-[#f3efff]",
                 )}
@@ -781,7 +795,11 @@ function ProductDetailPage() {
                 {isSaved ? "Saved" : "Save"}
               </button>
               <button
-                className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-full border border-black/8 bg-white text-[14px] shadow-[0_8px_18px_rgba(15,23,42,0.04)] transition duration-300 hover:-translate-y-0.5 hover:border-black/16 hover:bg-[#fbfbfc] hover:shadow-[0_14px_24px_rgba(15,23,42,0.08)]"
+                className={shopButtonClass({
+                  className: "flex-1 shadow-[0_8px_18px_rgba(15,23,42,0.04)]",
+                  size: "sm",
+                  variant: "neutral",
+                })}
                 onClick={handleShare}
                 type="button"
               >
@@ -909,7 +927,11 @@ function ProductDetailPage() {
               </div>
             </div>
             <button
-              className="inline-flex h-11 items-center justify-center rounded-full border border-black/8 bg-[#f7f7f8] px-5 text-[14px] font-medium text-[#111] shadow-[0_10px_22px_rgba(15,23,42,0.04)] transition duration-300 hover:-translate-y-0.5 hover:border-black/16 hover:bg-white hover:shadow-[0_16px_28px_rgba(15,23,42,0.08)]"
+              className={shopButtonClass({
+                className: "shadow-[0_10px_22px_rgba(15,23,42,0.04)]",
+                size: "sm",
+                variant: "soft",
+              })}
               onClick={openReviewComposer}
               type="button"
             >
@@ -1245,14 +1267,20 @@ function ProductDetailPage() {
 
               <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
                 <button
-                  className="inline-flex h-12 items-center justify-center rounded-full border border-black/8 bg-[#f7f7f8] px-5 text-[15px] font-medium text-[#111] transition hover:bg-[#f0f0f2]"
+                  className={shopButtonClass({
+                    size: "md",
+                    variant: "soft",
+                  })}
                   onClick={() => setIsReviewComposerOpen(false)}
                   type="button"
                 >
                   Cancel
                 </button>
                 <button
-                  className="inline-flex h-12 items-center justify-center rounded-full bg-[var(--shop-brand)] px-6 text-[15px] font-medium text-white shadow-[0_14px_28px_rgba(84,51,235,0.24)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(84,51,235,0.3)]"
+                  className={shopButtonClass({
+                    size: "md",
+                    variant: "brand",
+                  })}
                   type="submit"
                 >
                   Submit review

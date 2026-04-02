@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
 import { useMemo } from "react";
+import { shopButtonClass } from "~/components/shop/button";
 import { PageFrame } from "~/components/shop/page-frame";
 import { ProductCard } from "~/components/shop/product-card";
 import { useShopState } from "~/components/shop/shop-state";
@@ -21,7 +22,11 @@ function CartPage() {
   const catalog = useShopCatalog();
   const { cart, removeFromCart, updateCartQuantity } = useShopState();
   const subtotal = useMemo(
-    () => cart.reduce((sum, item) => sum + parsePrice(item.price) * item.quantity, 0),
+    () =>
+      cart.reduce(
+        (sum, item) => sum + parsePrice(item.price) * item.quantity,
+        0,
+      ),
     [cart],
   );
 
@@ -58,7 +63,7 @@ function CartPage() {
                   </p>
                 </div>
                 <Link
-                  className="inline-flex h-12 items-center justify-center rounded-full bg-[var(--shop-brand)] px-6 text-[15px] font-medium text-white"
+                  className={shopButtonClass({ variant: "brand" })}
                   search={{ q: "" }}
                   to="/categories"
                 >
@@ -95,7 +100,10 @@ function CartPage() {
                           </Link>
                           <Link
                             className="mt-1 block text-[22px] font-medium leading-tight text-[#111]"
-                            params={{ productId: item.productId, slug: item.slug }}
+                            params={{
+                              productId: item.productId,
+                              slug: item.slug,
+                            }}
                             to="/products/$productId/$slug"
                           >
                             {item.title}
@@ -120,7 +128,10 @@ function CartPage() {
                       <div className="flex flex-wrap items-center gap-4">
                         <div className="flex items-center gap-2 text-[16px]">
                           <span className="font-medium text-[#111]">
-                            ${(parsePrice(item.price) * item.quantity).toFixed(2)}
+                            $
+                            {(parsePrice(item.price) * item.quantity).toFixed(
+                              2,
+                            )}
                           </span>
                           {item.compareAt ? (
                             <span className="text-black/40 line-through">
@@ -141,7 +152,9 @@ function CartPage() {
                         <button
                           className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#f7f7f8]"
                           disabled={item.quantity === 1}
-                          onClick={() => updateCartQuantity(item.id, item.quantity - 1)}
+                          onClick={() =>
+                            updateCartQuantity(item.id, item.quantity - 1)
+                          }
                           type="button"
                         >
                           <Minus className="h-4 w-4" />
@@ -151,7 +164,9 @@ function CartPage() {
                         </span>
                         <button
                           className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#f7f7f8]"
-                          onClick={() => updateCartQuantity(item.id, item.quantity + 1)}
+                          onClick={() =>
+                            updateCartQuantity(item.id, item.quantity + 1)
+                          }
                           type="button"
                         >
                           <Plus className="h-4 w-4" />
@@ -165,7 +180,9 @@ function CartPage() {
           </div>
 
           <aside className="rounded-[32px] border border-black/6 bg-white p-5 shadow-[0_10px_28px_rgba(15,23,42,0.06)] md:p-6 xl:sticky xl:top-24 xl:self-start">
-            <h2 className="text-[28px] font-medium tracking-[-0.04em]">Summary</h2>
+            <h2 className="text-[28px] font-medium tracking-[-0.04em]">
+              Summary
+            </h2>
             <div className="mt-6 grid gap-3 text-[15px]">
               <div className="flex items-center justify-between text-black/60">
                 <span>Subtotal</span>
@@ -181,7 +198,10 @@ function CartPage() {
               </div>
             </div>
             <Link
-              className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-full bg-[var(--shop-brand)] px-6 text-[16px] font-medium text-white shadow-[0_10px_28px_rgba(84,51,235,0.24)]"
+              className={shopButtonClass({
+                className: "mt-6 w-full",
+                variant: "brand",
+              })}
               search={{
                 checkoutId: "",
                 externalId: "",
