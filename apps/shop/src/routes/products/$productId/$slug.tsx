@@ -170,6 +170,7 @@ function ProductDetailPage() {
       image: activeImage,
       price: selectedPurchaseMode?.price ?? detail.price,
       compareAt: selectedPurchaseMode?.compareAt,
+      fulfillmentType: detail.fulfillmentType ?? "shipping",
       quantity,
       merchantName: detail.merchant.name,
       merchantSlug: detail.merchant.slug,
@@ -183,7 +184,16 @@ function ProductDetailPage() {
 
   const handleBuyNow = () => {
     handleAddToCart();
-    navigate({ to: "/checkout" });
+    navigate({
+      to: "/checkout",
+      search: {
+        checkoutId: "",
+        externalId: "",
+        provider: undefined,
+        status: undefined,
+        token: "",
+      },
+    });
   };
 
   const handleShare = async () => {
@@ -523,6 +533,13 @@ function ProductDetailPage() {
               Need a different setup?{" "}
               <Link
                 className="font-medium text-[var(--shop-brand)] underline-offset-4 hover:underline"
+                search={{
+                  checkoutId: "",
+                  externalId: "",
+                  provider: undefined,
+                  status: undefined,
+                  token: "",
+                }}
                 to="/checkout"
               >
                 Add notes at checkout

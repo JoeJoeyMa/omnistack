@@ -13,6 +13,7 @@
   ],
   "vars": {
     "WEB_ORIGIN": "https://maple-global-web.joejoey.workers.dev",
+    "SHOP_ORIGIN": "https://maple-global-shop.joejoey.workers.dev",
     "BETTER_AUTH_URL": "https://maple-global-server.joejoey.workers.dev"
   },
   "env": {
@@ -26,6 +27,7 @@
       ],
       "vars": {
         "WEB_ORIGIN": "http://localhost:3000",
+        "SHOP_ORIGIN": "http://localhost:3005",
         "BETTER_AUTH_URL": "http://localhost:3001"
       }
     }

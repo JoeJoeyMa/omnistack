@@ -1,11 +1,17 @@
 import { execFileSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 
 const root = import.meta.dirname;
 const envFilePath = path.join(root, "..", "apps", "server", ".dev.vars");
+const webEnvFilePath = path.join(root, "..", "apps", "web", ".env.dev");
+const shopEnvFilePath = path.join(root, "..", "apps", "shop", ".env.dev");
 
 function parseEnvFile(filePath) {
+  if (!existsSync(filePath)) {
+    return {};
+  }
+
   const raw = readFileSync(filePath, "utf8");
   const values = {};
 
@@ -29,6 +35,8 @@ function parseEnvFile(filePath) {
 }
 
 const parsed = parseEnvFile(envFilePath);
+const webEnv = parseEnvFile(webEnvFilePath);
+const shopEnv = parseEnvFile(shopEnvFilePath);
 
 const env = {
   ...process.env,
@@ -41,16 +49,37 @@ const env = {
 };
 
 const steps = [
-  ["pnpm", ["--filter", "@maple-global/server", "run", "secrets:sync"]],
-  ["pnpm", ["--filter", "@maple-global/server", "run", "db:push:dev"]],
-  ["pnpm", ["--filter", "@maple-global/server", "run", "deploy"]],
-  ["pnpm", ["--filter", "@maple-global/web", "run", "deploy"]],
+  {
+    command: "pnpm",
+    args: ["--filter", "@maple-global/server", "run", "secrets:sync"],
+    env,
+  },
+  {
+    command: "pnpm",
+    args: ["--filter", "@maple-global/server", "run", "db:push:dev"],
+    env,
+  },
+  {
+    command: "pnpm",
+    args: ["--filter", "@maple-global/server", "run", "deploy"],
+    env,
+  },
+  {
+    command: "pnpm",
+    args: ["--filter", "@maple-global/web", "run", "deploy"],
+    env: { ...env, ...webEnv },
+  },
+  {
+    command: "pnpm",
+    args: ["--filter", "@maple-global/shop", "run", "deploy"],
+    env: { ...env, ...shopEnv },
+  },
 ];
 
-for (const [command, args] of steps) {
-  execFileSync(command, args, {
+for (const step of steps) {
+  execFileSync(step.command, step.args, {
     cwd: path.join(root, ".."),
-    env,
+    env: step.env,
     stdio: "inherit",
   });
 }

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { cn } from "~/components/ui/button";
 import { authClient } from "~/lib/auth-client";
 import { useCopyText } from "~/lib/locale";
+import { getWebAuthBaseUrl, getWebServerUrl } from "~/lib/runtime-urls";
 
 type AuthView = "signin" | "signup" | "recover";
 type SocialProvider = "google" | "github";
@@ -19,8 +20,8 @@ type ProviderState = {
 type AccountRecord = { providerId: string };
 type CooldownKind = "verification" | "recovery-link" | "recovery-code";
 
-const serverUrl = import.meta.env.VITE_SERVER_URL ?? "http://localhost:3001";
-const authBaseUrl = new URL("/api/auth/", serverUrl);
+const serverUrl = getWebServerUrl();
+const authBaseUrl = new URL(getWebAuthBaseUrl());
 const cooldownStorageKey = "maple-auth-cooldowns";
 const cooldownDurationMs = 60_000;
 const initialProviders: ProviderState = {

@@ -139,6 +139,7 @@ function createSeedProduct(input: SeedProductInput): ProductDetailRecord {
   return {
     ...rest,
     brand: merchant.name,
+    fulfillmentType: "service",
     merchant: merchantProfile(rest.image, merchantBadge),
     recommendations: [],
     relatedMerchants: [],

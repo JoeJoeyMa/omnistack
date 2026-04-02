@@ -3,12 +3,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite dev --host 0.0.0.0 --port 3005",
+    "dev": "pnpm run dev:local",
+    "dev:local": "vite dev --host 0.0.0.0 --port 3005",
+    "dev:dev": "vite dev --host 0.0.0.0 --port 3005 --mode dev",
     "build": "vite build && tsc --noEmit",
     "preview": "vite preview --port 3005",
     "deploy": "wrangler deploy",
     "check-types": "tsc --noEmit",
-    "lint": "biome check src package.json tsconfig.json vite.config.ts wrangler.jsonc"
+    "lint": "biome check src package.json tsconfig.json vite.config.ts wrangler.jsonc .env.example"
   },
   "dependencies": {
     "@maple-global/api-client": "workspace:*",

@@ -1,5 +1,6 @@
 # Online dev workers vars (`apps/server/.dev.vars`)
 WEB_ORIGIN=https://maple-global-web.joejoey.workers.dev
+SHOP_ORIGIN=https://maple-global-shop.joejoey.workers.dev
 BETTER_AUTH_URL=https://maple-global-server.joejoey.workers.dev
 BETTER_AUTH_SECRET=change-me
 
@@ -12,6 +13,14 @@ GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 RESEND_API_KEY=
 RESEND_FROM_EMAIL="MAPLE-GLOBAL <onboarding@resend.dev>"
+
+# Checkout providers
+STRIPE_SECRET_KEY=
+STRIPE_ENABLE_ALIPAY=false
+STRIPE_ENABLE_WECHAT_PAY=false
+PAYPAL_CLIENT_ID=
+PAYPAL_CLIENT_SECRET=
+PAYPAL_ENV=sandbox
 
 # Required for drizzle-kit remote operations
 CLOUDFLARE_ACCOUNT_ID=

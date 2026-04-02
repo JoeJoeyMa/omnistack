@@ -88,6 +88,7 @@ export function getProductDetail(
     title: matchedCard.title,
     price: matchedCard.price,
     image: matchedCard.image,
+    fulfillmentType: "shipping",
     gallery: [matchedCard.image, matchedCard.image, matchedCard.image],
     rating: matchedCard.rating,
     reviewsCount: matchedCard.reviews ?? "0",

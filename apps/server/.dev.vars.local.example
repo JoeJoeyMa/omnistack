@@ -1,5 +1,6 @@
 # Local worker vars (`apps/server/.dev.vars.local`)
 WEB_ORIGIN=http://localhost:3000
+SHOP_ORIGIN=http://localhost:3005
 BETTER_AUTH_URL=http://localhost:3001
 BETTER_AUTH_SECRET=change-me
 
@@ -12,6 +13,14 @@ GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 RESEND_API_KEY=
 RESEND_FROM_EMAIL="MAPLE-GLOBAL <onboarding@resend.dev>"
+
+# Checkout providers
+STRIPE_SECRET_KEY=
+STRIPE_ENABLE_ALIPAY=false
+STRIPE_ENABLE_WECHAT_PAY=false
+PAYPAL_CLIENT_ID=
+PAYPAL_CLIENT_SECRET=
+PAYPAL_ENV=sandbox
 
 # Required for drizzle-kit remote operations
 CLOUDFLARE_ACCOUNT_ID=

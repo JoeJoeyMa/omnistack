@@ -182,6 +182,13 @@ function CartPage() {
             </div>
             <Link
               className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-full bg-[var(--shop-brand)] px-6 text-[16px] font-medium text-white shadow-[0_10px_28px_rgba(84,51,235,0.24)]"
+              search={{
+                checkoutId: "",
+                externalId: "",
+                provider: undefined,
+                status: undefined,
+                token: "",
+              }}
               to="/checkout"
             >
               Continue to checkout

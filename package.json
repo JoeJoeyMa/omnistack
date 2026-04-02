@@ -15,6 +15,7 @@
     "dev:native": "turbo dev --filter=@maple-global/native",
     "build": "turbo build",
     "deploy:web": "pnpm --filter @maple-global/web run deploy",
+    "deploy:shop": "pnpm --filter @maple-global/shop run deploy",
     "deploy:server": "pnpm --filter @maple-global/server run deploy",
     "deploy:server:prepare": "pnpm --filter @maple-global/server run secrets:sync && pnpm --filter @maple-global/server run db:push:dev",
     "deploy:cloudflare": "node ./scripts/deploy-cloudflare.mjs",

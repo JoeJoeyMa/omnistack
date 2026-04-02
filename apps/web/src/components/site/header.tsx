@@ -11,7 +11,7 @@ import { ThemeToggle } from "./theme-toggle";
 
 const directLinks = [
   { label: "Pricing", href: "/pricing" },
-  { label: "About", href: "/about" },
+  { label: "Shop", href: "/shop" },
   { label: "Foundation", href: "/foundation" },
 ];
 

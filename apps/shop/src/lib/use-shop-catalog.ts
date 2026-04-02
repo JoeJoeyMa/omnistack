@@ -1,11 +1,12 @@
+import type { ShopCatalogPayload } from "@maple-global/api-client";
 import { useEffect, useState } from "react";
 import { Route as RootRoute } from "~/routes/__root";
 import { isEmptyShopCatalog, loadShopCatalog } from "./shop-api";
 
-let latestResolvedCatalog: ReturnType<typeof RootRoute.useLoaderData> | null = null;
+let latestResolvedCatalog: ShopCatalogPayload | null = null;
 
-export function useShopCatalog() {
-  const loaderCatalog = RootRoute.useLoaderData();
+export function useShopCatalog(): ShopCatalogPayload {
+  const loaderCatalog = RootRoute.useLoaderData() as ShopCatalogPayload;
   const [catalog, setCatalog] = useState(
     latestResolvedCatalog && !isEmptyShopCatalog(latestResolvedCatalog)
       ? latestResolvedCatalog

@@ -65,6 +65,32 @@ export const productPurchaseModeSchema = z.object({
   price: z.string(),
 });
 
+export const shopFulfillmentTypeSchema = z.enum(["service", "shipping"]);
+export const shopCheckoutDeliveryModeSchema = z.enum([
+  "service",
+  "shipping_standard",
+  "shipping_priority",
+]);
+export const shopCheckoutProviderSchema = z.enum([
+  "stripe",
+  "paypal",
+  "alipay",
+  "wechat_pay",
+]);
+export const shopCheckoutProviderStatusSchema = z.enum([
+  "enabled",
+  "requires_keys",
+  "coming_soon",
+]);
+export const shopCheckoutStatusSchema = z.enum([
+  "draft",
+  "pending",
+  "requires_action",
+  "paid",
+  "cancelled",
+  "failed",
+]);
+
 export const productColorSchema = z.object({
   image: z.string().optional(),
   label: z.string(),
@@ -85,6 +111,7 @@ export const productDetailSchema = z.object({
   boughtText: z.string().optional(),
   colors: z.array(productColorSchema).optional(),
   description: z.string(),
+  fulfillmentType: shopFulfillmentTypeSchema.optional(),
   gallery: z.array(z.string()),
   image: z.string(),
   lowStockText: z.string().optional(),
@@ -194,6 +221,104 @@ export const shopUpsertProductInputSchema = z.object({
   store: shopStorePatchSchema.optional(),
 });
 
+export const shopCheckoutLineItemSchema = z.object({
+  brand: z.string(),
+  compareAt: z.string().optional(),
+  fulfillmentType: shopFulfillmentTypeSchema,
+  image: z.string(),
+  merchantName: z.string(),
+  merchantSlug: z.string(),
+  price: z.string(),
+  productId: z.string(),
+  purchaseModeLabel: z.string().optional(),
+  quantity: z.number().int().positive(),
+  slug: z.string(),
+  title: z.string(),
+  variantLabel: z.string().optional(),
+});
+
+export const shopCheckoutCustomerSchema = z.object({
+  companyName: z.string().optional(),
+  country: z.string().min(2),
+  email: z.email(),
+  fullName: z.string().min(1),
+  phone: z.string().min(3),
+});
+
+export const shopCheckoutShippingAddressSchema = z.object({
+  city: z.string().min(1),
+  country: z.string().min(2),
+  line1: z.string().min(1),
+  line2: z.string().optional(),
+  postalCode: z.string().min(1),
+  recipient: z.string().min(1),
+  stateProvince: z.string().optional(),
+});
+
+export const shopCheckoutServiceDetailsSchema = z.object({
+  businessType: z.string().optional(),
+  fulfillmentNotes: z.string().optional(),
+  projectName: z.string().optional(),
+});
+
+export const shopCheckoutAmountSummarySchema = z.object({
+  currencyCode: z.string().length(3),
+  shippingMinor: z.number().int().nonnegative(),
+  subtotalMinor: z.number().int().nonnegative(),
+  totalMinor: z.number().int().nonnegative(),
+});
+
+export const shopCheckoutProviderConfigSchema = z.object({
+  checkoutMode: z.enum(["hosted", "redirect"]),
+  description: z.string(),
+  label: z.string(),
+  provider: shopCheckoutProviderSchema,
+  reason: z.string().optional(),
+  status: shopCheckoutProviderStatusSchema,
+});
+
+export const shopCheckoutConfigSchema = z.object({
+  providers: z.array(shopCheckoutProviderConfigSchema),
+  supportsMixedCurrencies: z.boolean(),
+});
+
+export const shopCheckoutCreateInputSchema = z.object({
+  customer: shopCheckoutCustomerSchema,
+  deliveryMode: shopCheckoutDeliveryModeSchema,
+  lineItems: z.array(shopCheckoutLineItemSchema).min(1),
+  provider: shopCheckoutProviderSchema,
+  returnOrigin: z.url(),
+  serviceDetails: shopCheckoutServiceDetailsSchema.optional(),
+  shippingAddress: shopCheckoutShippingAddressSchema.optional(),
+});
+
+export const shopCheckoutSessionSchema = z.object({
+  checkoutId: z.string(),
+  externalId: z.string().optional(),
+  provider: shopCheckoutProviderSchema,
+  redirectUrl: z.url(),
+  status: z.enum(["pending", "requires_action"]),
+  summary: shopCheckoutAmountSummarySchema,
+});
+
+export const shopCheckoutFinalizeInputSchema = z.object({
+  checkoutId: z.string(),
+  externalId: z.string().optional(),
+  provider: shopCheckoutProviderSchema,
+});
+
+export const shopCheckoutFinalizeSchema = z.object({
+  checkoutId: z.string(),
+  externalId: z.string().optional(),
+  lineItems: z.array(shopCheckoutLineItemSchema),
+  message: z.string(),
+  provider: shopCheckoutProviderSchema,
+  reference: z.string(),
+  receiptUrl: z.url().optional(),
+  status: shopCheckoutStatusSchema,
+  summary: shopCheckoutAmountSummarySchema,
+});
+
 export type BrowseCategory = z.infer<typeof browseCategorySchema>;
 export type CategoryDetailRecord = z.infer<typeof categoryDetailSchema>;
 export type CategoryStoreShowcase = z.infer<typeof categoryStoreShowcaseSchema>;
@@ -207,7 +332,41 @@ export type ProductPurchaseMode = z.infer<typeof productPurchaseModeSchema>;
 export type ProductReview = z.infer<typeof productReviewSchema>;
 export type ShopCard = z.infer<typeof shopCardSchema>;
 export type ShopCatalogPayload = z.infer<typeof shopCatalogSchema>;
+export type ShopCheckoutAmountSummary = z.infer<
+  typeof shopCheckoutAmountSummarySchema
+>;
+export type ShopCheckoutConfig = z.infer<typeof shopCheckoutConfigSchema>;
+export type ShopCheckoutCreateInput = z.infer<
+  typeof shopCheckoutCreateInputSchema
+>;
+export type ShopCheckoutCustomer = z.infer<typeof shopCheckoutCustomerSchema>;
+export type ShopCheckoutDeliveryMode = z.infer<
+  typeof shopCheckoutDeliveryModeSchema
+>;
+export type ShopCheckoutFinalizeInput = z.infer<
+  typeof shopCheckoutFinalizeInputSchema
+>;
+export type ShopCheckoutFinalizeResult = z.infer<
+  typeof shopCheckoutFinalizeSchema
+>;
+export type ShopCheckoutLineItem = z.infer<typeof shopCheckoutLineItemSchema>;
+export type ShopCheckoutProvider = z.infer<typeof shopCheckoutProviderSchema>;
+export type ShopCheckoutProviderConfig = z.infer<
+  typeof shopCheckoutProviderConfigSchema
+>;
+export type ShopCheckoutProviderStatus = z.infer<
+  typeof shopCheckoutProviderStatusSchema
+>;
+export type ShopCheckoutServiceDetails = z.infer<
+  typeof shopCheckoutServiceDetailsSchema
+>;
+export type ShopCheckoutSession = z.infer<typeof shopCheckoutSessionSchema>;
+export type ShopCheckoutShippingAddress = z.infer<
+  typeof shopCheckoutShippingAddressSchema
+>;
+export type ShopCheckoutStatus = z.infer<typeof shopCheckoutStatusSchema>;
 export type ShopCollection = z.infer<typeof shopCollectionSchema>;
+export type ShopFulfillmentType = z.infer<typeof shopFulfillmentTypeSchema>;
 export type ShopProductPlacement = z.infer<typeof shopProductPlacementSchema>;
 export type ShopShelf = z.infer<typeof shopShelfSchema>;
 export type ShopStorePatch = z.infer<typeof shopStorePatchSchema>;

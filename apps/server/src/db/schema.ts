@@ -61,3 +61,15 @@ export const shopDocument = sqliteTable("shop_document", {
   value: text("value").notNull(),
   updatedAt: integer("updated_at").notNull(),
 });
+
+export const shopCheckout = sqliteTable("shop_checkout", {
+  id: text("id").primaryKey(),
+  createdAt: integer("created_at").notNull(),
+  externalId: text("external_id"),
+  payload: text("payload").notNull(),
+  provider: text("provider").notNull(),
+  receiptUrl: text("receipt_url"),
+  reference: text("reference").notNull(),
+  status: text("status").notNull(),
+  updatedAt: integer("updated_at").notNull(),
+});

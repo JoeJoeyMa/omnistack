@@ -1,21 +1,20 @@
+import { RPCHandler } from "@orpc/server/fetch";
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { RPCHandler } from "@orpc/server/fetch";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { createAuth } from "./auth";
 import { getDb } from "./db/client";
 import * as schema from "./db/schema";
-import {
-  buildRecoveryCodeEmail,
-  sendTransactionalEmail,
-} from "./email";
+import { buildRecoveryCodeEmail, sendTransactionalEmail } from "./email";
+import { getRequestOrigin, resolveWebOrigin } from "./origin";
 import { rpcRouter } from "./rpc/router";
 
 export type Env = {
   Bindings: {
     DB: D1Database;
     WEB_ORIGIN: string;
+    SHOP_ORIGIN?: string;
     BETTER_AUTH_URL: string;
     BETTER_AUTH_SECRET: string;
     GITHUB_CLIENT_ID?: string;
@@ -24,6 +23,12 @@ export type Env = {
     GOOGLE_CLIENT_SECRET?: string;
     RESEND_API_KEY?: string;
     RESEND_FROM_EMAIL?: string;
+    PAYPAL_CLIENT_ID?: string;
+    PAYPAL_CLIENT_SECRET?: string;
+    PAYPAL_ENV?: string;
+    STRIPE_ENABLE_ALIPAY?: string;
+    STRIPE_ENABLE_WECHAT_PAY?: string;
+    STRIPE_SECRET_KEY?: string;
   };
 };
 
@@ -34,18 +39,24 @@ const recoveryCodeExpiresInSeconds = 600;
 app.use(
   "*",
   cors({
-    origin: (origin, c) => origin ?? c.env.WEB_ORIGIN,
+    origin: (origin, c) =>
+      resolveWebOrigin({
+        configuredWebOrigin: c.env.WEB_ORIGIN,
+        configuredShopOrigin: c.env.SHOP_ORIGIN,
+        requestOrigin: origin,
+        serverOrigin: c.env.BETTER_AUTH_URL,
+      }),
     credentials: true,
   }),
 );
 
 app.on(["GET", "POST"], "/api/auth/*", (c) => {
-  const auth = createAuth(c.env);
+  const auth = createAuth(c.env, getRequestOrigin(c.req.raw));
   return auth.handler(c.req.raw);
 });
 
 app.get("/verify-email", (c) => {
-  const auth = createAuth(c.env);
+  const auth = createAuth(c.env, getRequestOrigin(c.req.raw));
   const url = new URL(c.req.url);
   url.pathname = "/api/auth/verify-email";
 
@@ -67,6 +78,12 @@ app.post("/auth/recover", async (c) => {
   const body = await c.req.json().catch(() => null);
   const email =
     typeof body?.email === "string" ? body.email.trim().toLowerCase() : "";
+  const webOrigin = resolveWebOrigin({
+    configuredWebOrigin: c.env.WEB_ORIGIN,
+    configuredShopOrigin: c.env.SHOP_ORIGIN,
+    requestOrigin: getRequestOrigin(c.req.raw),
+    serverOrigin: c.env.BETTER_AUTH_URL,
+  });
 
   if (!email) {
     return c.json({ message: "Enter the account email first." }, 400);
@@ -108,7 +125,7 @@ app.post("/auth/recover", async (c) => {
   });
 
   const message = buildRecoveryCodeEmail({
-    appOrigin: c.env.WEB_ORIGIN,
+    appOrigin: webOrigin,
     email,
     recoveryCode,
     codeExpiresInMinutes: Math.floor(recoveryCodeExpiresInSeconds / 60),
@@ -133,7 +150,7 @@ app.post("/auth/recover", async (c) => {
 app.all("/rpc/*", async (c) => {
   const result = await rpcHandler.handle(c.req.raw, {
     prefix: "/rpc",
-    context: { db: c.env.DB },
+    context: { db: c.env.DB, env: c.env },
   });
 
   if (!result.matched) {
@@ -144,7 +161,7 @@ app.all("/rpc/*", async (c) => {
 });
 
 app.get("/auth/providers", (c) => {
-  const auth = createAuth(c.env);
+  const auth = createAuth(c.env, getRequestOrigin(c.req.raw));
   const emailDeliveryEnabled = Boolean(
     c.env.RESEND_API_KEY && c.env.RESEND_FROM_EMAIL,
   );

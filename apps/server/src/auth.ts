@@ -11,14 +11,24 @@ import {
   sendTransactionalEmail,
 } from "./email";
 import type { Env } from "./index";
+import { getTrustedOrigins, resolveWebOrigin } from "./origin";
 
-export function createAuth(bindings: Env["Bindings"]) {
+export function createAuth(
+  bindings: Env["Bindings"],
+  requestOrigin?: string | null,
+) {
   const db = drizzle(bindings.DB, { schema });
   const emailVerificationEnabled = Boolean(
     bindings.RESEND_API_KEY && bindings.RESEND_FROM_EMAIL,
   );
   const verificationExpiresInSeconds = 600;
   const passwordResetExpiresInSeconds = 3600;
+  const webOrigin = resolveWebOrigin({
+    configuredWebOrigin: bindings.WEB_ORIGIN,
+    configuredShopOrigin: bindings.SHOP_ORIGIN,
+    requestOrigin,
+    serverOrigin: bindings.BETTER_AUTH_URL,
+  });
 
   const socialProviders: Record<
     string,
@@ -46,7 +56,12 @@ export function createAuth(bindings: Env["Bindings"]) {
     }),
     secret: bindings.BETTER_AUTH_SECRET,
     baseURL: bindings.BETTER_AUTH_URL,
-    trustedOrigins: [bindings.WEB_ORIGIN],
+    trustedOrigins: getTrustedOrigins({
+      configuredWebOrigin: bindings.WEB_ORIGIN,
+      configuredShopOrigin: bindings.SHOP_ORIGIN,
+      requestOrigin,
+      serverOrigin: bindings.BETTER_AUTH_URL,
+    }),
     emailAndPassword: {
       enabled: true,
       requireEmailVerification: emailVerificationEnabled,
@@ -58,7 +73,7 @@ export function createAuth(bindings: Env["Bindings"]) {
         }
 
         const { html, subject, text } = buildPasswordResetEmail({
-          appOrigin: bindings.WEB_ORIGIN,
+          appOrigin: webOrigin,
           email: user.email,
           resetUrl: url,
           expiresInMinutes: Math.floor(passwordResetExpiresInSeconds / 60),
@@ -109,9 +124,9 @@ export function createAuth(bindings: Env["Bindings"]) {
                   undefined,
                   verificationExpiresInSeconds,
                 );
-                const verificationUrl = `${bindings.BETTER_AUTH_URL}/verify-email?token=${verificationToken}&callbackURL=${encodeURIComponent(bindings.WEB_ORIGIN)}`;
+                const verificationUrl = `${bindings.BETTER_AUTH_URL}/verify-email?token=${verificationToken}&callbackURL=${encodeURIComponent(webOrigin)}`;
                 const message = buildVerificationEmail({
-                  appOrigin: bindings.WEB_ORIGIN,
+                  appOrigin: webOrigin,
                   email,
                   verificationCode: otp,
                   verificationUrl,
@@ -123,7 +138,7 @@ export function createAuth(bindings: Env["Bindings"]) {
                 html = message.html;
               } else if (type === "sign-in") {
                 const message = buildOneTimeCodeEmail({
-                  appOrigin: bindings.WEB_ORIGIN,
+                  appOrigin: webOrigin,
                   email,
                   code: otp,
                   expiresInMinutes,
@@ -142,7 +157,7 @@ export function createAuth(bindings: Env["Bindings"]) {
                 html = message.html;
               } else if (type === "forget-password") {
                 const message = buildOneTimeCodeEmail({
-                  appOrigin: bindings.WEB_ORIGIN,
+                  appOrigin: webOrigin,
                   email,
                   code: otp,
                   expiresInMinutes,
@@ -161,7 +176,7 @@ export function createAuth(bindings: Env["Bindings"]) {
                 html = message.html;
               } else {
                 const message = buildOneTimeCodeEmail({
-                  appOrigin: bindings.WEB_ORIGIN,
+                  appOrigin: webOrigin,
                   email,
                   code: otp,
                   expiresInMinutes,

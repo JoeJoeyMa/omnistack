@@ -1,14 +1,16 @@
 import {
   createContext,
+  type ReactNode,
   useContext,
   useEffect,
   useState,
-  type ReactNode,
 } from "react";
+import type { ShopFulfillmentType } from "@maple-global/api-client";
 
 export type ShopCartLine = {
   brand: string;
   compareAt?: string;
+  fulfillmentType: ShopFulfillmentType;
   id: string;
   image: string;
   merchantName: string;
@@ -30,6 +32,7 @@ type ShopStateValue = {
   addToCart: (input: AddToCartInput) => void;
   cart: ShopCartLine[];
   cartCount: number;
+  clearCart: () => void;
   removeFromCart: (lineId: string) => void;
   savedCount: number;
   savedProductIds: string[];
@@ -45,6 +48,15 @@ type StoredState = {
 const STORAGE_KEY = "maple-shop-state";
 
 const ShopStateContext = createContext<ShopStateValue | null>(null);
+
+function normalizeCartLine(item: ShopCartLine) {
+  return {
+    ...item,
+    fulfillmentType:
+      item.fulfillmentType ??
+      (item.merchantSlug === "mapleglobal" ? "service" : "shipping"),
+  } satisfies ShopCartLine;
+}
 
 function createLineId(input: AddToCartInput) {
   return [
@@ -69,7 +81,9 @@ function readStoredState(): StoredState {
     const parsed = JSON.parse(raw) as Partial<StoredState>;
 
     return {
-      cart: Array.isArray(parsed.cart) ? parsed.cart : [],
+      cart: Array.isArray(parsed.cart)
+        ? parsed.cart.map((item) => normalizeCartLine(item as ShopCartLine))
+        : [],
       savedProductIds: Array.isArray(parsed.savedProductIds)
         ? parsed.savedProductIds.filter((item): item is string => typeof item === "string")
         : [],
@@ -107,6 +121,9 @@ export function ShopStateProvider({ children }: { children: ReactNode }) {
       value={{
         cart,
         cartCount: cart.reduce((sum, item) => sum + item.quantity, 0),
+        clearCart: () => {
+          setCart([]);
+        },
         savedProductIds,
         savedCount: savedProductIds.length,
         addToCart: (input) => {
@@ -128,11 +145,11 @@ export function ShopStateProvider({ children }: { children: ReactNode }) {
 
             return [
               ...current,
-              {
+              normalizeCartLine({
                 ...input,
                 id: lineId,
                 quantity: input.quantity ?? 1,
-              },
+              }),
             ];
           });
         },

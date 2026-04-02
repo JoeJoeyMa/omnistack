@@ -2,15 +2,34 @@ import { cloudflare } from "@cloudflare/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 
-export default defineConfig({
-  plugins: [
-    tailwindcss(),
-    tsConfigPaths({ projects: ["./tsconfig.json"] }),
-    cloudflare({ viteEnvironment: { name: "ssr" } }),
-    tanstackStart(),
-    viteReact(),
-  ],
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "");
+  const serverTarget = env.VITE_SERVER_URL ?? "http://127.0.0.1:3001";
+  const apiProxy = {
+    changeOrigin: true,
+    secure: false,
+    target: serverTarget,
+  };
+
+  return {
+    plugins: [
+      tailwindcss(),
+      tsConfigPaths({ projects: ["./tsconfig.json"] }),
+      cloudflare({ viteEnvironment: { name: "ssr" } }),
+      tanstackStart(),
+      viteReact(),
+    ],
+    server: {
+      proxy: {
+        "/api": apiProxy,
+        "/auth": apiProxy,
+        "/health": apiProxy,
+        "/rpc": apiProxy,
+        "/verify-email": apiProxy,
+      },
+    },
+  };
 });
