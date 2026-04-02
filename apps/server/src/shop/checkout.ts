@@ -9,6 +9,12 @@ import type {
   ShopCheckoutSession,
   ShopCheckoutStatus,
 } from "@maple-global/api-client";
+import type { AuthSessionUser } from "../auth-session";
+import {
+  persistCheckoutAccountData,
+  resolveCheckoutCustomer,
+  resolveCheckoutShippingAddress,
+} from "./account";
 
 type CheckoutBindings = {
   PAYPAL_CLIENT_ID?: string;
@@ -293,6 +299,7 @@ function checkoutReference() {
 
 async function insertCheckoutDraft(
   db: D1Database,
+  userId: string | null,
   provider: ShopCheckoutProvider,
   payload: CheckoutDraftPayload,
 ) {
@@ -304,6 +311,7 @@ async function insertCheckoutDraft(
     .prepare(
       `INSERT INTO shop_checkout (
         id,
+        user_id,
         reference,
         provider,
         status,
@@ -312,10 +320,11 @@ async function insertCheckoutDraft(
         receipt_url,
         created_at,
         updated_at
-      ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)`,
+      ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)`,
     )
     .bind(
       checkoutId,
+      userId,
       reference,
       provider,
       "draft",
@@ -705,18 +714,26 @@ export async function createShopCheckoutSession(
   db: D1Database,
   env: CheckoutBindings,
   input: ShopCheckoutCreateInput,
+  authUser: AuthSessionUser | null,
 ) {
   assertProviderEnabled(input.provider, env);
 
+  const customer = resolveCheckoutCustomer(authUser, input.customer);
+  const shippingAddress = resolveCheckoutShippingAddress(input.shippingAddress);
+
+  if (authUser) {
+    await persistCheckoutAccountData(db, authUser, customer, shippingAddress);
+  }
+
   const payload: CheckoutDraftPayload = {
-    customer: input.customer,
+    customer,
     deliveryMode: input.deliveryMode,
     lineItems: input.lineItems,
     serviceDetails: input.serviceDetails,
-    shippingAddress: input.shippingAddress,
+    shippingAddress,
     summary: buildAmountSummary(input),
   };
-  const draft = await insertCheckoutDraft(db, input.provider, payload);
+  const draft = await insertCheckoutDraft(db, authUser?.id ?? null, input.provider, payload);
   const returnOrigin = getOrigin(
     input.returnOrigin,
     env.SHOP_ORIGIN ?? env.WEB_ORIGIN,

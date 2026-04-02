@@ -319,6 +319,71 @@ export const shopCheckoutFinalizeSchema = z.object({
   summary: shopCheckoutAmountSummarySchema,
 });
 
+export const shopAccountProfileSchema = z.object({
+  companyName: z.string().optional(),
+  country: z.string().min(2).optional(),
+  email: z.email(),
+  emailVerified: z.boolean(),
+  fullName: z.string().min(1),
+  phone: z.string().min(3).optional(),
+});
+
+export const shopAccountProfileInputSchema = z.object({
+  companyName: z.string().optional(),
+  country: z.string().min(2).optional(),
+  fullName: z.string().min(1),
+  phone: z.string().min(3).optional(),
+});
+
+export const shopAccountAddressSchema = z.object({
+  city: z.string().min(1),
+  country: z.string().min(2),
+  createdAt: z.string(),
+  id: z.string(),
+  isDefault: z.boolean(),
+  line1: z.string().min(1),
+  line2: z.string().optional(),
+  postalCode: z.string().min(1),
+  recipient: z.string().min(1),
+  stateProvince: z.string().optional(),
+  updatedAt: z.string(),
+});
+
+export const shopAccountAddressInputSchema = z.object({
+  city: z.string().min(1),
+  country: z.string().min(2),
+  id: z.string().optional(),
+  isDefault: z.boolean().optional(),
+  line1: z.string().min(1),
+  line2: z.string().optional(),
+  postalCode: z.string().min(1),
+  recipient: z.string().min(1),
+  stateProvince: z.string().optional(),
+});
+
+export const shopAccountAddressDeleteInputSchema = z.object({
+  id: z.string().min(1),
+});
+
+export const shopAccountOrderSchema = z.object({
+  checkoutId: z.string(),
+  createdAt: z.string(),
+  customer: shopCheckoutCustomerSchema,
+  lineItems: z.array(shopCheckoutLineItemSchema),
+  provider: shopCheckoutProviderSchema,
+  receiptUrl: z.url().optional(),
+  reference: z.string(),
+  shippingAddress: shopCheckoutShippingAddressSchema.optional(),
+  status: shopCheckoutStatusSchema,
+  summary: shopCheckoutAmountSummarySchema,
+});
+
+export const shopAccountSchema = z.object({
+  addresses: z.array(shopAccountAddressSchema),
+  profile: shopAccountProfileSchema,
+  recentOrders: z.array(shopAccountOrderSchema),
+});
+
 export type BrowseCategory = z.infer<typeof browseCategorySchema>;
 export type CategoryDetailRecord = z.infer<typeof categoryDetailSchema>;
 export type CategoryStoreShowcase = z.infer<typeof categoryStoreShowcaseSchema>;
@@ -334,6 +399,19 @@ export type ShopCard = z.infer<typeof shopCardSchema>;
 export type ShopCatalogPayload = z.infer<typeof shopCatalogSchema>;
 export type ShopCheckoutAmountSummary = z.infer<
   typeof shopCheckoutAmountSummarySchema
+>;
+export type ShopAccount = z.infer<typeof shopAccountSchema>;
+export type ShopAccountAddress = z.infer<typeof shopAccountAddressSchema>;
+export type ShopAccountAddressDeleteInput = z.infer<
+  typeof shopAccountAddressDeleteInputSchema
+>;
+export type ShopAccountAddressInput = z.infer<
+  typeof shopAccountAddressInputSchema
+>;
+export type ShopAccountOrder = z.infer<typeof shopAccountOrderSchema>;
+export type ShopAccountProfile = z.infer<typeof shopAccountProfileSchema>;
+export type ShopAccountProfileInput = z.infer<
+  typeof shopAccountProfileInputSchema
 >;
 export type ShopCheckoutConfig = z.infer<typeof shopCheckoutConfigSchema>;
 export type ShopCheckoutCreateInput = z.infer<

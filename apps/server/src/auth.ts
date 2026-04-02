@@ -12,6 +12,11 @@ import {
 } from "./email";
 import type { Env } from "./index";
 import { getTrustedOrigins, resolveWebOrigin } from "./origin";
+import {
+  hashUserPassword,
+  isLocalPasswordRuntime,
+  verifyUserPassword,
+} from "./password";
 
 export function createAuth(
   bindings: Env["Bindings"],
@@ -29,6 +34,7 @@ export function createAuth(
     requestOrigin,
     serverOrigin: bindings.BETTER_AUTH_URL,
   });
+  const allowLegacyScrypt = isLocalPasswordRuntime(bindings.BETTER_AUTH_URL);
 
   const socialProviders: Record<
     string,
@@ -64,6 +70,15 @@ export function createAuth(
     }),
     emailAndPassword: {
       enabled: true,
+      password: {
+        hash: hashUserPassword,
+        verify: ({ hash, password }) =>
+          verifyUserPassword({
+            allowLegacyScrypt,
+            hash,
+            password,
+          }),
+      },
       requireEmailVerification: emailVerificationEnabled,
       resetPasswordTokenExpiresIn: passwordResetExpiresInSeconds,
       revokeSessionsOnPasswordReset: true,

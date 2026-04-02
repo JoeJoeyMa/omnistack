@@ -72,12 +72,17 @@ export function ShopRail() {
             ) : null}
           </button>
         </nav>
-        <button
-          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/8 bg-[#f3f3f4] text-black/75 lg:h-12 lg:w-12"
-          type="button"
+        <Link
+          className={cn(
+            "relative inline-flex h-11 w-11 items-center justify-center rounded-full border transition hover:scale-105 lg:h-12 lg:w-12",
+            pathname.startsWith("/account")
+              ? "border-[var(--shop-brand)] bg-[var(--shop-brand)] text-white shadow-[0_8px_22px_rgba(84,51,235,0.26)]"
+              : "border-black/8 bg-[#f3f3f4] text-black/75 hover:bg-gray-200 hover:text-black",
+          )}
+          to="/account"
         >
           <UserRound className="h-4 w-4" />
-        </button>
+        </Link>
       </div>
     </aside>
   );

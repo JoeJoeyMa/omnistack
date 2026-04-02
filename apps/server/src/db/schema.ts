@@ -71,5 +71,34 @@ export const shopCheckout = sqliteTable("shop_checkout", {
   receiptUrl: text("receipt_url"),
   reference: text("reference").notNull(),
   status: text("status").notNull(),
+  userId: text("user_id").references(() => user.id, { onDelete: "set null" }),
+  updatedAt: integer("updated_at").notNull(),
+});
+
+export const shopCustomerProfile = sqliteTable("shop_customer_profile", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => user.id, { onDelete: "cascade" }),
+  companyName: text("company_name"),
+  country: text("country"),
+  phone: text("phone"),
+  createdAt: integer("created_at").notNull(),
+  updatedAt: integer("updated_at").notNull(),
+});
+
+export const shopShippingAddress = sqliteTable("shop_shipping_address", {
+  id: text("id").primaryKey(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  recipient: text("recipient").notNull(),
+  line1: text("line1").notNull(),
+  line2: text("line2"),
+  city: text("city").notNull(),
+  stateProvince: text("state_province"),
+  postalCode: text("postal_code").notNull(),
+  country: text("country").notNull(),
+  isDefault: integer("is_default", { mode: "boolean" }).notNull().default(false),
+  createdAt: integer("created_at").notNull(),
   updatedAt: integer("updated_at").notNull(),
 });

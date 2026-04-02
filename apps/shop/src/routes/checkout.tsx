@@ -33,6 +33,7 @@ import { PageFrame } from "~/components/shop/page-frame";
 import { useShopState } from "~/components/shop/shop-state";
 import { cn } from "~/components/shop/utils";
 import { useShopSessionUser } from "~/lib/auth-session";
+import { loadShopAccount } from "~/lib/shop-account";
 import { getShopApiClient } from "~/lib/shop-api";
 
 const providerKeys = ["stripe", "paypal", "alipay", "wechat_pay"] as const;
@@ -477,6 +478,62 @@ function CheckoutPage() {
         recipient: current.recipient || sessionUser.name || "",
       }));
     }
+  }, [sessionUser]);
+
+  useEffect(() => {
+    if (!sessionUser) {
+      return;
+    }
+
+    let cancelled = false;
+
+    loadShopAccount()
+      .then((account) => {
+        if (cancelled) {
+          return;
+        }
+
+        const defaultAddress =
+          account.addresses.find((address) => address.isDefault) ??
+          account.addresses[0];
+
+        setCustomer((current) => ({
+          companyName:
+            current.companyName || account.profile.companyName || "",
+          country:
+            current.country === "US"
+              ? account.profile.country || current.country
+              : current.country,
+          email: current.email || account.profile.email,
+          fullName: current.fullName || account.profile.fullName,
+          phone: current.phone || account.profile.phone || "",
+        }));
+
+        if (!defaultAddress) {
+          return;
+        }
+
+        setShippingAddress((current) => ({
+          city: current.city || defaultAddress.city,
+          country:
+            current.country === "US"
+              ? defaultAddress.country
+              : current.country,
+          line1: current.line1 || defaultAddress.line1,
+          line2: current.line2 || defaultAddress.line2 || "",
+          postalCode: current.postalCode || defaultAddress.postalCode,
+          recipient: current.recipient || defaultAddress.recipient,
+          stateProvince:
+            current.stateProvince || defaultAddress.stateProvince || "",
+        }));
+      })
+      .catch(() => {
+        // Keep checkout functional even if account data is unavailable.
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [sessionUser]);
 
   useEffect(() => {

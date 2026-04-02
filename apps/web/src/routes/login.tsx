@@ -4,7 +4,11 @@ import { useEffect, useMemo, useState } from "react";
 import { cn } from "~/components/ui/button";
 import { authClient } from "~/lib/auth-client";
 import { useCopyText } from "~/lib/locale";
-import { getWebAuthBaseUrl, getWebServerUrl } from "~/lib/runtime-urls";
+import {
+  getWebAuthBaseUrl,
+  getWebServerUrl,
+  getWebShopUrl,
+} from "~/lib/runtime-urls";
 
 type AuthView = "signin" | "signup" | "recover";
 type SocialProvider = "google" | "github";
@@ -40,10 +44,37 @@ export const Route = createFileRoute("/login")({
   component: LoginPage,
 });
 
+function resolveReturnTo() {
+  if (typeof window === "undefined") {
+    return "http://localhost:3000";
+  }
+
+  const requested = new URLSearchParams(window.location.search).get("returnTo");
+
+  if (!requested) {
+    return window.location.origin;
+  }
+
+  try {
+    const resolved = new URL(requested, window.location.origin);
+    const shopOrigin = new URL(getWebShopUrl(), window.location.origin).origin;
+    const allowedOrigins = new Set([window.location.origin, shopOrigin]);
+
+    if (!allowedOrigins.has(resolved.origin)) {
+      return window.location.origin;
+    }
+
+    return resolved.toString();
+  } catch {
+    return window.location.origin;
+  }
+}
+
 function LoginPage() {
   const copy = useCopyText();
   const sessionState = authClient.useSession();
   const user = sessionState.data?.user ?? null;
+  const redirectTarget = useMemo(() => resolveReturnTo(), []);
 
   const [view, setView] = useState<AuthView>("signin");
   const [providers, setProviders] = useState<ProviderState>(initialProviders);
@@ -246,11 +277,11 @@ function LoginPage() {
     return data;
   }
 
-  async function refreshSessionAndGoHome(message: string) {
+  async function refreshSessionAndGo(message: string) {
     setSuccess(message);
     await sessionState.refetch();
     window.setTimeout(() => {
-      window.location.href = "/";
+      window.location.href = redirectTarget;
     }, 650);
   }
 
@@ -261,7 +292,7 @@ function LoginPage() {
     try {
       const data = await postAuth("sign-in/social", {
         provider,
-        callbackURL: `${window.location.origin}/login`,
+        callbackURL: redirectTarget,
       });
 
       if (typeof data?.url === "string") {
@@ -269,7 +300,7 @@ function LoginPage() {
         return;
       }
 
-      window.location.href = "/";
+      window.location.href = redirectTarget;
     } catch (error) {
       setError(
         error instanceof Error
@@ -290,10 +321,10 @@ function LoginPage() {
       await postAuth("sign-in/email", {
         email: signInEmail,
         password: signInPassword,
-        callbackURL: window.location.origin,
+        callbackURL: redirectTarget,
         rememberMe: true,
       });
-      await refreshSessionAndGoHome(copy("Signed in successfully."));
+      await refreshSessionAndGo(copy("Signed in successfully."));
     } catch (error) {
       const message =
         error instanceof Error
@@ -326,7 +357,7 @@ function LoginPage() {
         name: signUpName,
         email: signUpEmail,
         password: signUpPassword,
-        callbackURL: window.location.origin,
+        callbackURL: redirectTarget,
         rememberMe: true,
       });
 
@@ -338,7 +369,7 @@ function LoginPage() {
           ),
         );
       } else {
-        await refreshSessionAndGoHome(copy("Account created successfully."));
+        await refreshSessionAndGo(copy("Account created successfully."));
       }
     } catch (error) {
       setError(
@@ -371,7 +402,7 @@ function LoginPage() {
     try {
       await postAuth("send-verification-email", {
         email: signUpEmail,
-        callbackURL: window.location.origin,
+        callbackURL: redirectTarget,
       });
       startCooldown("verification", signUpEmail);
       setSuccess(
@@ -407,7 +438,7 @@ function LoginPage() {
         email: signUpEmail,
         otp: verificationCode.trim(),
       });
-      await refreshSessionAndGoHome(copy("Email verified successfully."));
+      await refreshSessionAndGo(copy("Email verified successfully."));
     } catch (error) {
       setError(
         error instanceof Error
@@ -501,10 +532,10 @@ function LoginPage() {
       await postAuth("sign-in/email", {
         email: recoveryEmail,
         password: recoveryPassword,
-        callbackURL: window.location.origin,
+        callbackURL: redirectTarget,
         rememberMe: true,
       });
-      await refreshSessionAndGoHome(
+      await refreshSessionAndGo(
         copy("Password updated and you are now signed in."),
       );
     } catch (error) {

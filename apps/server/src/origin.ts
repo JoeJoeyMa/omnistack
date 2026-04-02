@@ -67,6 +67,19 @@ function configuredOrigins(options: ResolveWebOriginOptions) {
     .filter((value): value is string => Boolean(value));
 }
 
+function rewriteOriginForRequestHost(origin: string, requestOriginUrl: URL) {
+  const parsedOrigin = parseOrigin(origin);
+  if (!parsedOrigin) {
+    return null;
+  }
+
+  const rewrittenUrl = new URL(parsedOrigin.toString());
+  rewrittenUrl.protocol = requestOriginUrl.protocol;
+  rewrittenUrl.hostname = requestOriginUrl.hostname;
+
+  return rewrittenUrl.origin;
+}
+
 function useDynamicLocalOrigins(options: ResolveWebOriginOptions) {
   const origins = configuredOrigins(options);
 
@@ -75,6 +88,22 @@ function useDynamicLocalOrigins(options: ResolveWebOriginOptions) {
     origins.every((origin) => isLocalOrigin(parseOrigin(origin))) &&
     isLocalOrigin(parseOrigin(options.serverOrigin))
   );
+}
+
+function dynamicLocalOrigins(options: ResolveWebOriginOptions) {
+  const requestOriginUrl = parseOrigin(options.requestOrigin);
+
+  if (
+    !requestOriginUrl ||
+    !isLocalOrigin(requestOriginUrl) ||
+    !useDynamicLocalOrigins(options)
+  ) {
+    return [];
+  }
+
+  return configuredOrigins(options)
+    .map((origin) => rewriteOriginForRequestHost(origin, requestOriginUrl))
+    .filter((origin): origin is string => Boolean(origin));
 }
 
 export function getRequestOrigin(request: Request) {
@@ -96,12 +125,20 @@ export function resolveWebOrigin({
 }: ResolveWebOriginOptions) {
   const configuredOrigin = parseOrigin(configuredWebOrigin);
   const requestOriginUrl = parseOrigin(requestOrigin);
-  const allowedConfiguredOrigins = configuredOrigins({
-    configuredWebOrigin,
-    configuredShopOrigin,
-    requestOrigin,
-    serverOrigin,
-  });
+  const allowedConfiguredOrigins = new Set([
+    ...configuredOrigins({
+      configuredWebOrigin,
+      configuredShopOrigin,
+      requestOrigin,
+      serverOrigin,
+    }),
+    ...dynamicLocalOrigins({
+      configuredWebOrigin,
+      configuredShopOrigin,
+      requestOrigin,
+      serverOrigin,
+    }),
+  ]);
 
   if (!configuredOrigin) {
     return requestOriginUrl?.origin ?? configuredWebOrigin;
@@ -111,19 +148,7 @@ export function resolveWebOrigin({
     return configuredOrigin.origin;
   }
 
-  if (allowedConfiguredOrigins.includes(requestOriginUrl.origin)) {
-    return requestOriginUrl.origin;
-  }
-
-  if (
-    useDynamicLocalOrigins({
-      configuredWebOrigin,
-      configuredShopOrigin,
-      requestOrigin,
-      serverOrigin,
-    }) &&
-    isLocalOrigin(requestOriginUrl)
-  ) {
+  if (allowedConfiguredOrigins.has(requestOriginUrl.origin)) {
     return requestOriginUrl.origin;
   }
 
@@ -135,6 +160,7 @@ export function getTrustedOrigins(options: ResolveWebOriginOptions) {
     ...new Set([
       resolveWebOrigin(options),
       ...configuredOrigins(options),
+      ...dynamicLocalOrigins(options),
     ]),
   ];
 }

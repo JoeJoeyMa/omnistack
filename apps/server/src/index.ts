@@ -4,6 +4,7 @@ import { drizzle } from "drizzle-orm/d1";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { createAuth } from "./auth";
+import { getRequestAuthUser } from "./auth-session";
 import { getDb } from "./db/client";
 import * as schema from "./db/schema";
 import { buildRecoveryCodeEmail, sendTransactionalEmail } from "./email";
@@ -148,9 +149,10 @@ app.post("/auth/recover", async (c) => {
 });
 
 app.all("/rpc/*", async (c) => {
+  const authUser = await getRequestAuthUser(c.env, c.req.raw);
   const result = await rpcHandler.handle(c.req.raw, {
     prefix: "/rpc",
-    context: { db: c.env.DB, env: c.env },
+    context: { authUser, db: c.env.DB, env: c.env },
   });
 
   if (!result.matched) {

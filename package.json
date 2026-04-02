@@ -8,6 +8,8 @@
   },
   "scripts": {
     "dev": "turbo dev --parallel",
+    "local-all": "node ./scripts/run-dev-all.mjs local",
+    "dev-all": "node ./scripts/run-dev-all.mjs dev",
     "dev:web": "turbo dev --filter=@maple-global/web",
     "dev:shop": "turbo dev --filter=@maple-global/shop",
     "dev:server": "turbo dev --filter=@maple-global/server",

@@ -10,6 +10,12 @@ export type AppApiClient = ContractRouterClient<typeof appContract>;
 export function createApiClient(baseUrl: string) {
   return createORPCClient<AppApiClient>(
     new RPCLink({
+      fetch(request, init) {
+        return fetch(request, {
+          ...init,
+          credentials: "include",
+        });
+      },
       url: `${baseUrl}/rpc`,
       method: rpcMethod,
     }),

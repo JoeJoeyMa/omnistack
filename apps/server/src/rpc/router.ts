@@ -1,5 +1,12 @@
 import { appContract } from "@maple-global/api-client/contract";
 import { implement } from "@orpc/server";
+import type { AuthSessionUser } from "../auth-session";
+import {
+  deleteShopAccountAddress,
+  getShopAccount,
+  updateShopAccountProfile,
+  upsertShopAccountAddress,
+} from "../shop/account";
 import {
   createShopCheckoutSession,
   finalizeShopCheckout,
@@ -19,6 +26,7 @@ export type RpcContext = {
     STRIPE_SECRET_KEY?: string;
     WEB_ORIGIN: string;
   };
+  authUser: AuthSessionUser | null;
 };
 
 const rpc = implement(appContract).$context<RpcContext>();
@@ -32,11 +40,26 @@ export const rpcRouter = rpc.router({
     message: `Hello, ${input.name}!`,
   })),
   shopCatalog: rpc.shopCatalog.handler(({ context }) => getShopCatalog(context.db)),
+  shopAccountGet: rpc.shopAccountGet.handler(({ context }) =>
+    getShopAccount(context.db, context.authUser),
+  ),
+  shopAccountUpdateProfile: rpc.shopAccountUpdateProfile.handler(
+    ({ context, input }) =>
+      updateShopAccountProfile(context.db, context.authUser, input),
+  ),
+  shopAccountUpsertAddress: rpc.shopAccountUpsertAddress.handler(
+    ({ context, input }) =>
+      upsertShopAccountAddress(context.db, context.authUser, input),
+  ),
+  shopAccountDeleteAddress: rpc.shopAccountDeleteAddress.handler(
+    ({ context, input }) =>
+      deleteShopAccountAddress(context.db, context.authUser, input.id),
+  ),
   shopCheckoutConfig: rpc.shopCheckoutConfig.handler(({ context }) =>
     getShopCheckoutConfig(context.env),
   ),
   shopCheckoutCreate: rpc.shopCheckoutCreate.handler(({ context, input }) =>
-    createShopCheckoutSession(context.db, context.env, input),
+    createShopCheckoutSession(context.db, context.env, input, context.authUser),
   ),
   shopCheckoutFinalize: rpc.shopCheckoutFinalize.handler(({ context, input }) =>
     finalizeShopCheckout(context.db, context.env, input),
